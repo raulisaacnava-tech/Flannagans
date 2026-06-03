@@ -1,0 +1,247 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { Image as ImageIcon, MapPinned, MonitorPlay, Quote, Save } from 'lucide-react';
+import { DEFAULT_HOMEPAGE_CONTENT } from '@/lib/restaurant-content';
+import { HomepageContent, Restaurant } from '@/types/restaurant';
+
+interface HomepageContentManagerProps {
+  restaurant: Restaurant;
+  onSave: (restaurant: Restaurant) => void;
+}
+
+type GalleryDraft = HomepageContent['galleryItems'];
+
+export const HomepageContentManager: React.FC<HomepageContentManagerProps> = ({
+  restaurant,
+  onSave,
+}) => {
+  const [draft, setDraft] = useState<HomepageContent>(restaurant.homepageContent || DEFAULT_HOMEPAGE_CONTENT);
+
+  useEffect(() => {
+    setDraft(restaurant.homepageContent || DEFAULT_HOMEPAGE_CONTENT);
+  }, [restaurant]);
+
+  const updateField = <K extends keyof HomepageContent>(key: K, value: HomepageContent[K]) => {
+    setDraft((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const updateHighlight = (index: number, value: string) => {
+    const next = [...draft.heroHighlights];
+    next[index] = value;
+    updateField('heroHighlights', next);
+  };
+
+  const updateGallery = (index: number, key: keyof GalleryDraft[number], value: string) => {
+    const next = draft.galleryItems.map((item, itemIndex) =>
+      itemIndex === index ? { ...item, [key]: value } : item,
+    );
+    updateField('galleryItems', next);
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    onSave({
+      ...restaurant,
+      email: draft.reservationsEmail,
+      homepageContent: draft,
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-8 select-none text-left">
+      <div className="space-y-1.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <h2 className="font-display font-black text-2xl text-cream uppercase tracking-wide">
+            Contenido de la Web
+          </h2>
+          <p className="text-xs text-cream/40 font-mono uppercase tracking-widest">
+            Hero, video, galeria, mapa, reservas y textos visibles del homepage
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-none bg-primary hover:bg-yellow-400 text-secondary font-display font-black text-xs uppercase tracking-widest transition-all duration-300 shrink-0 cursor-pointer"
+        >
+          <Save size={14} />
+          Guardar Contenido
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 gap-8">
+        <section className="bg-[#0A0A0A] border border-white/10 p-6 sm:p-8 space-y-5">
+          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+            <MonitorPlay className="text-primary" size={18} />
+            <h3 className="font-display font-black text-sm text-cream uppercase tracking-wider">
+              Hero y Video Principal
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Eyebrow</span>
+              <input value={draft.heroEyebrow} onChange={(e) => updateField('heroEyebrow', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Titulo hero</span>
+              <input value={draft.heroTitle} onChange={(e) => updateField('heroTitle', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+          </div>
+
+          <label className="space-y-1 block">
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Descripcion hero</span>
+            <textarea value={draft.heroDescription} onChange={(e) => updateField('heroDescription', e.target.value)} rows={3} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream p-4 text-xs focus:outline-none resize-none font-semibold" />
+          </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Texto boton principal</span>
+              <input value={draft.heroPrimaryCtaLabel} onChange={(e) => updateField('heroPrimaryCtaLabel', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Texto boton secundario</span>
+              <input value={draft.heroSecondaryCtaLabel} onChange={(e) => updateField('heroSecondaryCtaLabel', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL video hero</span>
+              <input value={draft.heroVideoUrl} onChange={(e) => updateField('heroVideoUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL poster hero</span>
+              <input value={draft.heroPosterUrl} onChange={(e) => updateField('heroPosterUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {draft.heroHighlights.map((item, index) => (
+              <label key={`hero-highlight-${index}`} className="space-y-1">
+                <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Highlight {index + 1}</span>
+                <input value={item} onChange={(e) => updateHighlight(index, e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+              </label>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-[#0A0A0A] border border-white/10 p-6 sm:p-8 space-y-5">
+          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+            <ImageIcon className="text-primary" size={18} />
+            <h3 className="font-display font-black text-sm text-cream uppercase tracking-wider">
+              Galeria y Preview de Carta
+            </h3>
+          </div>
+
+          <label className="space-y-1 block">
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Texto de entrada galeria</span>
+            <textarea value={draft.galleryIntro} onChange={(e) => updateField('galleryIntro', e.target.value)} rows={2} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream p-4 text-xs focus:outline-none resize-none font-semibold" />
+          </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Titulo preview menu</span>
+              <input value={draft.visualMenuTitle} onChange={(e) => updateField('visualMenuTitle', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">CTA principal preview</span>
+              <input value={draft.visualMenuPrimaryCtaLabel} onChange={(e) => updateField('visualMenuPrimaryCtaLabel', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+          </div>
+
+          <label className="space-y-1 block">
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Descripcion preview menu</span>
+            <textarea value={draft.visualMenuDescription} onChange={(e) => updateField('visualMenuDescription', e.target.value)} rows={3} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream p-4 text-xs focus:outline-none resize-none font-semibold" />
+          </label>
+
+          <label className="space-y-1 block">
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">CTA secundario preview</span>
+            <input value={draft.visualMenuSecondaryCtaLabel} onChange={(e) => updateField('visualMenuSecondaryCtaLabel', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+          </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {draft.galleryItems.map((item, index) => (
+              <div key={item.id} className="border border-white/10 p-4 space-y-3">
+                <span className="block text-[10px] font-bold text-primary uppercase tracking-widest">Galeria {index + 1}</span>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Etiqueta</span>
+                  <input value={item.label} onChange={(e) => updateGallery(index, 'label', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+                </label>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL imagen</span>
+                  <input value={item.imageUrl} onChange={(e) => updateGallery(index, 'imageUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+                </label>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-[#0A0A0A] border border-white/10 p-6 sm:p-8 space-y-5">
+          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+            <MapPinned className="text-primary" size={18} />
+            <h3 className="font-display font-black text-sm text-cream uppercase tracking-wider">
+              Mapa, Ubicacion y Reservas
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Titulo ubicacion</span>
+              <input value={draft.locationTitle} onChange={(e) => updateField('locationTitle', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Texto lugar</span>
+              <input value={draft.locationPlaceLabel} onChange={(e) => updateField('locationPlaceLabel', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+          </div>
+
+          <label className="space-y-1 block">
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL embed Google Maps</span>
+            <input value={draft.googleMapsEmbedUrl} onChange={(e) => updateField('googleMapsEmbedUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+          </label>
+
+          <label className="space-y-1 block">
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL abrir Google Maps</span>
+            <input value={draft.googleMapsPlaceUrl} onChange={(e) => updateField('googleMapsPlaceUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+          </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Titulo reservas</span>
+              <input value={draft.reservationsTitle} onChange={(e) => updateField('reservationsTitle', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Email reservas</span>
+              <input value={draft.reservationsEmail} onChange={(e) => updateField('reservationsEmail', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Canal de reserva</span>
+              <input value={draft.reservationsChannelLabel} onChange={(e) => updateField('reservationsChannelLabel', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+          </div>
+        </section>
+
+        <section className="bg-[#0A0A0A] border border-white/10 p-6 sm:p-8 space-y-5">
+          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+            <Quote className="text-primary" size={18} />
+            <h3 className="font-display font-black text-sm text-cream uppercase tracking-wider">
+              Cierre de Marca
+            </h3>
+          </div>
+
+          <label className="space-y-1 block">
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Frase principal</span>
+            <textarea value={draft.brandQuoteText} onChange={(e) => updateField('brandQuoteText', e.target.value)} rows={2} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream p-4 text-xs focus:outline-none resize-none font-semibold" />
+          </label>
+          <label className="space-y-1 block">
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Frase destacada</span>
+            <textarea value={draft.brandQuoteAccent} onChange={(e) => updateField('brandQuoteAccent', e.target.value)} rows={2} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream p-4 text-xs focus:outline-none resize-none font-semibold" />
+          </label>
+        </section>
+      </div>
+    </form>
+  );
+};
+
+export default HomepageContentManager;

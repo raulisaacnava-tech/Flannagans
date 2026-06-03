@@ -1,26 +1,304 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000; /* Negro sólido puro para máxima elegancia y alto contraste */
+  --foreground: #FFFFFF; /* Blanco puro para textos */
+  --primary: #FACC15;    /* Amarillo cheddar plano */
+  --secondary: #000000;
+  --accent: #FFFFFF;
+  --accent-red: #EF4444;
+  --ember: #FF6A00;
+  --coal: #080503;
+  --smoke: #14100C;
+  --cream: #F5F5F7;
+  --dark-gray: #0A0A0A;  /* Zinc ultra oscuro */
+  --card-bg: #121212;   /* Zinc intermedio */
+  --border-color: rgba(255, 255, 255, 0.08); /* Borde minimalista ultra-fino */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-red: var(--accent-red);
+  --color-cream: var(--cream);
+  --color-dark-gray: var(--dark-gray);
+  --color-card-bg: var(--card-bg);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scrollbar minimalista industrial */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFFFFF;
+}
+
+/* Efectos y clases de diseño editorial minimalista */
+.minimalist-card {
+  background-color: #0A0A0A;
+  border: 1px solid var(--border-color);
+  border-radius: 0px; /* Bordes rectos tipo Mosh/Webflow para mayor carácter */
+  transition: border-color 180ms var(--ease-out-strong), transform 180ms var(--ease-out-strong);
+}
+
+.minimalist-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-minimalist {
+  background-color: #FFFFFF;
+  color: #000000;
+  border-radius: 0px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: background-color 160ms var(--ease-out-strong), color 160ms var(--ease-out-strong), transform 140ms var(--ease-out-strong);
+}
+
+.btn-minimalist:hover {
+  background-color: var(--primary);
+  color: #000000;
+}
+
+.btn-minimalist:active {
+  transform: scale(0.97);
+}
+
+.btn-outline-minimalist {
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: border-color 160ms var(--ease-out-strong), background-color 160ms var(--ease-out-strong), transform 140ms var(--ease-out-strong);
+}
+
+.btn-outline-minimalist:hover {
+  border-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-outline-minimalist:active {
+  transform: scale(0.97);
+}
+
+.pressable {
+  transition: transform 140ms var(--ease-out-strong), background-color 160ms var(--ease-out-strong), color 160ms var(--ease-out-strong), border-color 160ms var(--ease-out-strong), box-shadow 180ms var(--ease-out-strong);
+  transform-origin: center;
+}
+
+.pressable:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pressable:hover {
+    transform: translateY(-1px);
+  }
+
+  .pressable:active {
+    transform: translateY(0) scale(0.97);
+  }
+}
+
+.premium-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-shadow: 0 8px 0 rgb(0 0 0 / 0.55), 0 0 32px rgb(250 204 21 / 0.18);
+}
+
+.premium-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, transparent 0%, rgb(255 255 255 / 0.42) 42%, transparent 58%);
+  transform: translateX(-120%);
+  transition: transform 520ms var(--ease-expo-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .premium-cta:hover::before {
+    transform: translateX(120%);
+  }
+}
+
+/* Efecto cinematico controlado para imágenes */
+@keyframes cinematicSlow {
+  0% {
+    transform: scale(1.02);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-cinematic {
+  animation: cinematicSlow 12s ease-in-out infinite;
+}
+
+.hero-ember-field {
+  position: absolute;
+  inset: -12%;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.82;
+  mix-blend-mode: screen;
+}
+
+.hero-ember-field::before,
+.hero-ember-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 84%, rgb(255 106 0 / 0.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 44% 92%, rgb(250 204 21 / 0.82) 0 1px, transparent 3px),
+    radial-gradient(circle at 72% 88%, rgb(239 68 68 / 0.72) 0 2px, transparent 4px),
+    radial-gradient(circle at 86% 76%, rgb(255 255 255 / 0.56) 0 1px, transparent 3px);
+  background-size: 210px 310px, 260px 360px, 320px 420px, 190px 250px;
+  filter: blur(0.2px);
+  animation: emberDrift 12s linear infinite;
+}
+
+.hero-ember-field::after {
+  transform: scale(1.25) rotate(6deg);
+  opacity: 0.48;
+  animation-duration: 18s;
+  animation-direction: reverse;
+}
+
+.hero-fire-wash {
+  background:
+    radial-gradient(circle at 50% 100%, rgb(255 106 0 / 0.36), transparent 34%),
+    radial-gradient(circle at 16% 12%, rgb(250 204 21 / 0.14), transparent 24%),
+    linear-gradient(180deg, rgb(0 0 0 / 0.38), rgb(0 0 0 / 0.08) 36%, rgb(0 0 0 / 0.88));
+  animation: heatBreath 4.8s var(--ease-in-out-strong) infinite;
+}
+
+.premium-mobile-shell {
+  background:
+    radial-gradient(circle at 50% -12%, rgb(250 204 21 / 0.15), transparent 28%),
+    linear-gradient(180deg, #11100d 0%, #050505 38%, #030303 100%);
+}
+
+.menu-card-premium {
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.075), transparent 36%),
+    linear-gradient(180deg, #12110f, #080808);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  transition: transform 180ms var(--ease-out-strong), border-color 180ms var(--ease-out-strong), background-color 180ms var(--ease-out-strong);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-card-premium:hover {
+    border-color: rgb(250 204 21 / 0.34);
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes emberDrift {
+  from {
+    transform: translate3d(0, 8%, 0);
+  }
+  to {
+    transform: translate3d(3%, -28%, 0);
+  }
+}
+
+@keyframes heatBreath {
+  0%, 100% {
+    opacity: 0.78;
+    filter: saturate(1);
+  }
+  50% {
+    opacity: 1;
+    filter: saturate(1.28);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift {
+    transition: transform 220ms var(--ease-out-strong), border-color 180ms var(--ease-out-strong);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Utilidades adicionales */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Ocultar barra y overlays de Google Translate */
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-text-highlight {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+.goog-te-gadget {
+  display: none !important;
+}
+/* Eliminar el subrayado de texto traducido */
+font[face="Arial"] {
+  vertical-align: unset !important;
 }
