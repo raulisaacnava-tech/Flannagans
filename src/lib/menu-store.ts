@@ -7,7 +7,13 @@ import {
   INITIAL_EXTRAS, 
   INITIAL_ALLERGENS 
 } from './data';
+import { DEFAULT_PROMOTIONS } from './default-promotions';
 import { getRestaurantWithDefaults } from './restaurant-content';
+import {
+  syncProductsToSupabase,
+  syncPromotionsToSupabase,
+  syncRestaurantToSupabase,
+} from './supabase-sync';
 
 const PRODUCTS_KEY = 'flanagans_products_v5';
 const RESTAURANT_KEY = 'flanagans_restaurant_v5';
@@ -47,6 +53,9 @@ export const getProducts = (): Product[] => {
 export const saveProducts = (products: Product[]) => {
   if (!isClient()) return;
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+  void syncProductsToSupabase(products).catch((error) => {
+    console.error('Error syncing products to Supabase', error);
+  });
   // Disparar un evento personalizado para actualizar otros componentes en tiempo real
   window.dispatchEvent(new Event('flanagans_menu_updated'));
 };
@@ -108,6 +117,9 @@ export const updateRestaurant = (updatedFields: Partial<Restaurant>): Restaurant
   };
   if (isClient()) {
     localStorage.setItem(RESTAURANT_KEY, JSON.stringify(updatedRestaurant));
+    void syncRestaurantToSupabase(updatedRestaurant).catch((error) => {
+      console.error('Error syncing restaurant to Supabase', error);
+    });
     window.dispatchEvent(new Event('flanagans_restaurant_updated'));
   }
   return getRestaurantWithDefaults(updatedRestaurant);
@@ -117,6 +129,17 @@ export const resetDemoData = (): void => {
   if (!isClient()) return;
   localStorage.setItem(PRODUCTS_KEY, JSON.stringify(INITIAL_PRODUCTS));
   localStorage.setItem(RESTAURANT_KEY, JSON.stringify(INITIAL_RESTAURANT));
+  localStorage.setItem('flanagans_promotions_v1', JSON.stringify(DEFAULT_PROMOTIONS));
+  void syncProductsToSupabase(INITIAL_PRODUCTS).catch((error) => {
+    console.error('Error resetting products in Supabase', error);
+  });
+  void syncRestaurantToSupabase(INITIAL_RESTAURANT).catch((error) => {
+    console.error('Error resetting restaurant in Supabase', error);
+  });
+  void syncPromotionsToSupabase(DEFAULT_PROMOTIONS).catch((error) => {
+    console.error('Error resetting promotions in Supabase', error);
+  });
   window.dispatchEvent(new Event('flanagans_menu_updated'));
   window.dispatchEvent(new Event('flanagans_restaurant_updated'));
+  window.dispatchEvent(new Event('flanagans_promotions_updated'));
 };

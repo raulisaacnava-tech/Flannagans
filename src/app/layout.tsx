@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Inter } from "next/font/google";
+import { AppDataBootstrap } from "@/components/app/AppDataBootstrap";
 import { OrderListProvider } from "@/lib/order-list";
 import Script from "next/script";
 import "./globals.css";
@@ -51,6 +52,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-background text-foreground selection:bg-primary selection:text-secondary flex flex-col font-sans">
         <OrderListProvider>
+          <AppDataBootstrap />
           {children}
         </OrderListProvider>
 

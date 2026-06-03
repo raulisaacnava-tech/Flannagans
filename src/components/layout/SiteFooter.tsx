@@ -1,11 +1,12 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getRestaurant } from '@/lib/menu-store';
-import { getRestaurantWithDefaults } from '@/lib/restaurant-content';
+import { useRestaurant } from '@/lib/use-restaurant';
 
 export const SiteFooter: React.FC = () => {
-  const restaurant = getRestaurantWithDefaults(getRestaurant());
+  const restaurant = useRestaurant();
 
   return (
     <footer className="bg-[#050505] border-t border-white/10 pt-20 pb-10">
@@ -21,9 +22,7 @@ export const SiteFooter: React.FC = () => {
                 className="object-contain"
               />
             </Link>
-            <p className="text-cream/50 text-sm max-w-xs">
-              {restaurant.welcomeMessage}
-            </p>
+            <p className="text-cream/50 text-sm max-w-xs">{restaurant.welcomeMessage}</p>
           </div>
 
           <div>
