@@ -13,7 +13,7 @@ export const HomeHero: React.FC = () => {
   const content = restaurant.homepageContent!;
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center pt-28 md:pt-32 pb-14 overflow-hidden bg-[#050302]">
+    <section className="relative min-h-[100dvh] flex items-center pt-36 pb-14 md:pt-32 overflow-hidden bg-[#050302]">
       <div className="absolute inset-0 bg-black">
         <video
           src={content.heroVideoUrl}

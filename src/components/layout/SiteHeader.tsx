@@ -38,21 +38,25 @@ export const SiteHeader: React.FC = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter,border-color,padding] duration-200 ease-[var(--ease-out-strong)] ${
         isScrolled || isMobileMenuOpen
           ? 'bg-[#070504]/92 backdrop-blur-xl border-b border-white/10 py-2.5 md:py-3'
-          : 'bg-gradient-to-b from-black/72 via-black/28 to-transparent py-3 md:py-5'
+          : 'bg-gradient-to-b from-black/72 via-black/28 to-transparent py-4 md:py-5'
       }`}
     >
       <div className="site-container flex items-center justify-between gap-4">
         <Link
           href="/"
-          className="relative z-50 flex h-14 w-[clamp(8.5rem,38vw,10rem)] items-center pressable md:h-16 md:w-[10.5rem]"
+          className={`relative z-50 flex items-center pressable transition-[width,height,transform] duration-200 ease-[var(--ease-out-strong)] md:h-16 md:w-[10.5rem] ${
+            isScrolled || isMobileMenuOpen
+              ? 'h-14 w-[10.75rem]'
+              : 'h-20 w-[clamp(12.5rem,48vw,15rem)]'
+          }`}
           aria-label="Flanagans inicio"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <Image
             src="/logo.webp"
             alt="Flanagans Logo"
-            width={160}
-            height={54}
+            width={240}
+            height={82}
             className="h-auto max-h-full w-full object-contain"
             priority
           />

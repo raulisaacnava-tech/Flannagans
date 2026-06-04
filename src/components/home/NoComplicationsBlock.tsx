@@ -15,9 +15,10 @@ export const NoComplicationsBlock: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="mx-auto mb-8 max-w-[min(100%,58rem)] break-words font-display text-[clamp(2.85rem,13.5vw,7rem)] font-black uppercase leading-[0.88] tracking-[-0.02em] text-secondary [text-wrap:balance] sm:text-[clamp(4.2rem,12vw,7rem)] lg:text-[7.5rem]"
+          className="mx-auto mb-8 max-w-[18rem] font-display text-[3.55rem] font-black uppercase leading-[0.86] tracking-[-0.015em] text-secondary sm:max-w-[42rem] sm:text-[4.5rem] md:max-w-[54rem] md:text-[5.8rem] lg:max-w-[64rem] lg:text-[7rem]"
         >
-          Sin complicarte
+          Sin{' '}
+          <span className="block sm:inline">complicarte</span>
         </motion.h2>
 
         <motion.p
