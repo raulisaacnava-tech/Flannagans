@@ -47,8 +47,8 @@ export const SiteHeader: React.FC = () => {
           href="/"
           className={`relative z-50 flex items-center pressable transition-[width,height,transform] duration-200 ease-[var(--ease-out-strong)] md:h-[4.5rem] md:w-[12.6rem] ${
             isScrolled || isMobileMenuOpen
-              ? 'h-[4.05rem] w-[12.9rem]'
-              : 'h-24 w-[clamp(15rem,55vw,18rem)]'
+              ? 'h-[3.8rem] w-[11.6rem]'
+              : 'h-[4.75rem] w-[clamp(11.5rem,36vw,13rem)]'
           }`}
           aria-label="Flanagans inicio"
           onClick={() => setIsMobileMenuOpen(false)}

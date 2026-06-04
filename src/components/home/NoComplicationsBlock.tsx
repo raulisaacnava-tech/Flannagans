@@ -15,7 +15,7 @@ export const NoComplicationsBlock: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="mx-auto mb-8 max-w-[min(100%,17rem)] text-center font-display text-[3.05rem] font-black uppercase leading-[0.9] tracking-normal text-secondary sm:max-w-[38rem] sm:text-[4rem] md:max-w-[48rem] md:text-[5rem] lg:max-w-[58rem] lg:text-[6.25rem]"
+          className="mx-auto mb-8 max-w-[min(100%,30rem)] text-center font-display text-[clamp(3.35rem,12.4vw,4.25rem)] font-black uppercase leading-[0.9] tracking-[-0.01em] text-secondary sm:max-w-[42rem] sm:text-[4.75rem] md:max-w-[52rem] md:text-[5.5rem] lg:max-w-[62rem] lg:text-[6.5rem]"
         >
           Sin{' '}
           <span className="block sm:inline">complicarte</span>
