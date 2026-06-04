@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Flame } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -11,18 +12,39 @@ const easeOutStrong = [0.23, 1, 0.32, 1] as const;
 export const HomeHero: React.FC = () => {
   const restaurant = useRestaurant();
   const content = restaurant.homepageContent!;
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const loadVideo = () => setShouldLoadVideo(true);
+    let cleanup = () => {};
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(loadVideo, { timeout: 1800 });
+      cleanup = () => window.cancelIdleCallback(idleId);
+    } else {
+      const timeoutId = globalThis.setTimeout(loadVideo, 1200);
+      cleanup = () => globalThis.clearTimeout(timeoutId);
+    }
+
+    return () => {
+      cleanup();
+    };
+  }, []);
 
   return (
     <section className="relative min-h-[100dvh] flex items-center pt-36 pb-14 md:pt-32 overflow-hidden bg-[#050302]">
       <div className="absolute inset-0 bg-black">
         <video
-          src={content.heroVideoUrl}
+          src={shouldLoadVideo ? content.heroVideoUrl : undefined}
           poster={content.heroPosterUrl}
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           className="h-full w-full object-cover opacity-55 scale-[1.03]"
         />
         <div className="absolute inset-0 hero-fire-wash" />

@@ -23,13 +23,51 @@ const LANGUAGES: Language[] = [
 
 declare global {
   interface Window {
-    google: {
+    google?: {
       translate: {
         TranslateElement: new (opts: object, id: string) => void;
       };
     };
     googleTranslateElementInit?: () => void;
   }
+}
+
+let translateLoader: Promise<void> | null = null;
+
+function ensureGoogleTranslateLoaded() {
+  if (typeof window === 'undefined') return Promise.resolve();
+  if (document.querySelector('.goog-te-combo')) return Promise.resolve();
+
+  if (!translateLoader) {
+    translateLoader = new Promise((resolve, reject) => {
+      const existingScript = document.getElementById('google-translate-script');
+
+      window.googleTranslateElementInit = () => {
+        if (window.google?.translate) {
+          new window.google.translate.TranslateElement(
+            { pageLanguage: 'es', autoDisplay: false },
+            'google_translate_element'
+          );
+        }
+        window.setTimeout(resolve, 350);
+      };
+
+      if (existingScript) {
+        window.setTimeout(resolve, 350);
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.id = 'google-translate-script';
+      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      script.defer = true;
+      script.onerror = () => reject(new Error('Google Translate no cargo correctamente'));
+      document.body.appendChild(script);
+    });
+  }
+
+  return translateLoader;
 }
 
 function triggerGoogleTranslate(targetLang: string) {
@@ -87,14 +125,16 @@ export const LanguageSelector: React.FC = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const handleSelect = (lang: Language) => {
+  const handleSelect = async (lang: Language) => {
     setCurrentLang(lang);
     setIsOpen(false);
+    await ensureGoogleTranslateLoaded().catch(() => undefined);
     triggerGoogleTranslate(lang.googleCode);
   };
 
   return (
     <div ref={ref} className="relative">
+      <div id="google_translate_element" className="sr-only" aria-hidden="true" />
       <button
         onClick={() => setIsOpen(v => !v)}
         className="flex items-center gap-1.5 px-2 py-1.5 text-cream/60 hover:text-primary transition-colors rounded-lg"

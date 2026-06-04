@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { LanguageSelector } from '@/components/menu/LanguageSelector';
 
 const navEase = [0.23, 1, 0.32, 1] as const;
 
@@ -75,6 +76,7 @@ export const SiteHeader: React.FC = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
+          <LanguageSelector />
           <Link href="#reservations" className="text-xs font-bold text-cream hover:text-primary uppercase tracking-[0.14em] transition-colors duration-[160ms]">
             Reservar
           </Link>
@@ -86,13 +88,16 @@ export const SiteHeader: React.FC = () => {
           </Link>
         </div>
 
-        <button
-          className="md:hidden z-50 grid h-11 w-11 place-items-center text-cream pressable"
-          onClick={() => setIsMobileMenuOpen((open) => !open)}
-          aria-label={isMobileMenuOpen ? 'Cerrar menu' : 'Abrir menu'}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="relative z-50 flex items-center gap-2 md:hidden">
+          <LanguageSelector />
+          <button
+            className="grid h-11 w-11 place-items-center text-cream pressable"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            aria-label={isMobileMenuOpen ? 'Cerrar menu' : 'Abrir menu'}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>

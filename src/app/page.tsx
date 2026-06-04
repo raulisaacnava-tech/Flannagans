@@ -18,8 +18,28 @@ import { LocationSection } from '@/components/home/LocationSection';
 import { BrandQuote } from '@/components/home/BrandQuote';
 
 export default function HomePage() {
+  const restaurantSchema = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: "Flanagans Burguer",
+    url: "https://flannagans.vercel.app",
+    image: "https://flannagans.vercel.app/logo.webp",
+    servesCuisine: ["Hamburguesas", "Comida americana"],
+    priceRange: "EUR",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Mostoles",
+      addressCountry: "ES",
+    },
+    hasMenu: "https://flannagans.vercel.app/menu",
+  };
+
   return (
     <div className="min-h-screen bg-[#050505] text-cream selection:bg-primary selection:text-secondary font-sans overflow-x-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantSchema) }}
+      />
       <SiteHeader />
       
       <main>

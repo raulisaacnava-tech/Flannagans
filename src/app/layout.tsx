@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Outfit, Inter } from "next/font/google";
 import { AppDataBootstrap } from "@/components/app/AppDataBootstrap";
 import { OrderListProvider } from "@/lib/order-list";
-import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,26 +17,65 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Flanagans Burguer | Carta Interactiva Premium",
-  description: "Disfruta el sabor de una burguer de verdad en Móstoles. Carne de primera calidad, combinaciones brutales y nuestra carta interactiva exclusiva.",
-  keywords: ["Flanagans Burguer", "hamburguesería Móstoles", "burguer artesanal", "carta digital", "menú interactivo"],
+  metadataBase: new URL("https://flannagans.vercel.app"),
+  title: {
+    default: "Flanagans Burguer | Hamburguesas al fuego en Mostoles",
+    template: "%s | Flanagans Burguer",
+  },
+  description:
+    "Hamburguesas al fuego en Mostoles con carne sellada, cheddar fundido, pan tostado y carta digital interactiva con videos por plato.",
+  applicationName: "Flanagans Burguer",
+  keywords: [
+    "Flanagans Burguer",
+    "hamburgueseria Mostoles",
+    "hamburguesas Mostoles",
+    "burguer artesanal",
+    "carta digital",
+    "menu interactivo",
+  ],
   authors: [{ name: "Flanagans Burguer" }],
+  creator: "Flanagans Burguer",
+  publisher: "Flanagans Burguer",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Flanagans Burguer | Carta Interactiva Premium",
-    description: "Disfruta el sabor de una burguer de verdad en Móstoles. Carne de primera calidad y combinaciones brutales.",
+    title: "Flanagans Burguer | Hamburguesas al fuego en Mostoles",
+    description:
+      "Carne sellada, cheddar fundido, pan tostado y una carta visual pensada para elegir con hambre.",
+    url: "/",
     type: "website",
     locale: "es_ES",
     siteName: "Flanagans Burguer",
+    images: [
+      {
+        url: "/logo.webp",
+        width: 512,
+        height: 174,
+        alt: "Logo de Flanagans Burguer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flanagans Burguer | Hamburguesas al fuego en Mostoles",
+    description: "Carta digital interactiva con videos por plato y hamburguesas hechas al fuego.",
+    images: ["/logo.webp"],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false, // Optimiza la experiencia móvil tipo app al evitar el zoom accidental al hacer tap
-    viewportFit: "cover",
-    themeColor: "#121212",
+  viewportFit: "cover",
+  themeColor: "#050505",
 };
 
 export default function RootLayout({
@@ -51,30 +89,11 @@ export default function RootLayout({
       className={`${inter.variable} ${outfit.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full bg-background text-foreground selection:bg-primary selection:text-secondary flex flex-col font-sans">
+      <body className="flex min-h-full flex-col bg-background font-sans text-foreground selection:bg-primary selection:text-secondary">
         <OrderListProvider>
           <AppDataBootstrap />
           {children}
         </OrderListProvider>
-
-        {/* Google Translate hidden widget — lo usamos solo para el motor de traducción */}
-        <div id="google_translate_element" className="sr-only" aria-hidden="true" />
-
-        {/* Init de Google Translate */}
-        <Script id="google-translate-init" strategy="afterInteractive">
-          {`
-            window.googleTranslateElementInit = function() {
-              new window.google.translate.TranslateElement(
-                { pageLanguage: 'es', autoDisplay: false },
-                'google_translate_element'
-              );
-            };
-          `}
-        </Script>
-        <Script
-          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );

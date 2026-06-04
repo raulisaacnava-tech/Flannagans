@@ -1,10 +1,19 @@
-import React from 'react';
-import { MenuAppShell } from '@/components/menu/MenuAppShell';
-import { Metadata } from 'next';
+import React from "react";
+import type { Metadata } from "next";
+import { MenuAppShell } from "@/components/menu/MenuAppShell";
 
 export const metadata: Metadata = {
-  title: 'La Carta | Flanagans Burguer',
-  description: 'Explora nuestra carta digital interactiva en Móstoles. Disfruta de nuestras hamburguesas premium clásicas y especiales con vista menú y vista vídeo.',
+  title: "Carta digital",
+  description:
+    "Explora la carta digital interactiva de Flanagans Burguer en Mostoles. Hamburguesas premium con fotos, videos cortos y detalles por plato.",
+  alternates: {
+    canonical: "/menu",
+  },
+  openGraph: {
+    title: "Carta digital | Flanagans Burguer",
+    description: "Hamburguesas premium con fotos, videos cortos y detalles por plato.",
+    url: "/menu",
+  },
 };
 
 export default function MenuPage() {
