@@ -16,6 +16,8 @@
 # next.js
 /.next/
 /.next-local/
+/.next-responsive/
+/.next-responsive-build/
 /out/
 
 # production

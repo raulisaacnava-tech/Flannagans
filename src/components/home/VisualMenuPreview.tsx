@@ -12,7 +12,7 @@ export const VisualMenuPreview: React.FC = () => {
 
   return (
     <section className="bg-[#0A0A0A] py-24 md:py-32 overflow-hidden relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -20,7 +20,7 @@ export const VisualMenuPreview: React.FC = () => {
             viewport={{ once: true }}
             className="w-full lg:w-1/2"
           >
-            <h2 className="font-display font-black text-5xl md:text-7xl uppercase tracking-tighter text-cream leading-[0.9] mb-6">
+            <h2 className="font-display mb-6 text-[clamp(3rem,13vw,5.5rem)] font-black uppercase leading-[0.9] tracking-[-0.02em] text-cream [text-wrap:balance] md:text-[clamp(4rem,8vw,5.75rem)]">
               {titleParts.slice(0, 2).join(' ')}<br />{titleParts.slice(2, 4).join(' ')}<br />{titleParts.slice(4).join(' ')}
             </h2>
             <p className="text-cream/60 font-medium text-lg mb-10 max-w-md">

@@ -33,12 +33,12 @@ export const HomeHero: React.FC = () => {
       <div className="absolute inset-x-0 top-0 h-px bg-primary/70" />
       <div className="absolute inset-x-8 bottom-10 h-px bg-white/10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full flex flex-col items-center text-center">
+      <div className="site-container relative z-10 flex w-full flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 14, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.42, ease: easeOutStrong }}
-          className="mb-6 inline-flex items-center gap-2 border border-primary/25 bg-black/45 backdrop-blur-md px-4 py-2 font-display font-black text-[11px] uppercase tracking-[0.18em] text-primary shadow-[0_0_24px_rgb(250_204_21_/_0.12)]"
+          className="mb-6 inline-flex max-w-full items-center justify-center gap-2 border border-primary/25 bg-black/45 px-3 py-2 text-center font-display text-[10px] font-black uppercase tracking-[0.12em] text-primary shadow-[0_0_24px_rgb(250_204_21_/_0.12)] backdrop-blur-md sm:px-4 sm:text-[11px] sm:tracking-[0.18em]"
         >
           <Flame size={14} className="fill-primary" />
           {content.heroEyebrow}
@@ -48,7 +48,7 @@ export const HomeHero: React.FC = () => {
           initial={{ opacity: 0, y: 26, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.68, delay: 0.05, ease: easeOutStrong }}
-          className="max-w-6xl font-display font-black uppercase text-cream leading-[0.88] mb-7 text-[clamp(3.4rem,8vw,6rem)] tracking-normal [text-wrap:balance] drop-shadow-[0_10px_42px_rgb(0_0_0_/_0.75)]"
+          className="max-w-6xl font-display text-[clamp(3rem,15vw,5.75rem)] font-black uppercase leading-[0.9] tracking-normal text-cream [text-wrap:balance] mb-7 drop-shadow-[0_10px_42px_rgb(0_0_0_/_0.75)] sm:text-[clamp(4rem,8vw,6rem)]"
         >
           {content.heroTitle}
         </motion.h1>
@@ -70,13 +70,13 @@ export const HomeHero: React.FC = () => {
         >
           <Link
             href="/menu"
-            className="w-full sm:w-auto bg-primary text-secondary font-display font-black text-base uppercase tracking-[0.12em] px-10 py-5 pressable premium-cta flex items-center justify-center gap-3"
+            className="flex min-h-14 w-full items-center justify-center gap-3 bg-primary px-7 py-4 font-display text-sm font-black uppercase tracking-[0.1em] text-secondary pressable premium-cta sm:w-auto sm:px-10 sm:py-5 sm:text-base sm:tracking-[0.12em]"
           >
             {content.heroPrimaryCtaLabel} <ArrowRight size={20} />
           </Link>
           <Link
             href="#reservations"
-            className="w-full sm:w-auto bg-black/35 border border-white/24 text-cream font-display font-black text-base uppercase tracking-[0.12em] px-10 py-5 pressable hover:bg-white/10 backdrop-blur-md flex items-center justify-center"
+            className="flex min-h-14 w-full items-center justify-center border border-white/24 bg-black/35 px-7 py-4 font-display text-sm font-black uppercase tracking-[0.1em] text-cream backdrop-blur-md pressable hover:bg-white/10 sm:w-auto sm:px-10 sm:py-5 sm:text-base sm:tracking-[0.12em]"
           >
             {content.heroSecondaryCtaLabel}
           </Link>

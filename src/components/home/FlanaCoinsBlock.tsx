@@ -11,7 +11,7 @@ export const FlanaCoinsBlock: React.FC = () => {
            style={{ backgroundImage: 'radial-gradient(circle at center, #000 2px, transparent 2px)', backgroundSize: '24px 24px' }} 
       />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div className="site-container relative z-10 flex flex-col items-center justify-between gap-8 md:flex-row">
         
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
@@ -23,7 +23,7 @@ export const FlanaCoinsBlock: React.FC = () => {
             <Star size={12} className="fill-primary" /> Próximamente
           </div>
           
-          <h2 className="font-display font-black text-4xl md:text-6xl uppercase tracking-tighter text-secondary leading-[0.9] mb-4">
+          <h2 className="mb-4 break-words font-display text-[clamp(2.8rem,12vw,4.25rem)] font-black uppercase leading-[0.9] tracking-[-0.02em] text-secondary [text-wrap:balance]">
             Sube de nivel con<br/>FlanaCoins
           </h2>
           <p className="text-secondary/80 font-bold max-w-md mx-auto md:mx-0">

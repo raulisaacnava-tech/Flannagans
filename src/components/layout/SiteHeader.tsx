@@ -26,20 +26,34 @@ export const SiteHeader: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,backdrop-filter,border-color,padding] duration-200 ease-[var(--ease-out-strong)] ${
-        isScrolled ? 'bg-[#070504]/88 backdrop-blur-xl border-b border-white/10 py-3' : 'bg-transparent py-5'
+        isScrolled || isMobileMenuOpen
+          ? 'bg-[#070504]/92 backdrop-blur-xl border-b border-white/10 py-2.5 md:py-3'
+          : 'bg-gradient-to-b from-black/72 via-black/28 to-transparent py-3 md:py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        <Link href="/" className="flex items-center z-50 pressable" aria-label="Flanagans inicio">
+      <div className="site-container flex items-center justify-between gap-4">
+        <Link
+          href="/"
+          className="relative z-50 flex h-14 w-[clamp(8.5rem,38vw,10rem)] items-center pressable md:h-16 md:w-[10.5rem]"
+          aria-label="Flanagans inicio"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
           <Image
             src="/logo.webp"
             alt="Flanagans Logo"
             width={160}
             height={54}
-            className="object-contain"
+            className="h-auto max-h-full w-full object-contain"
             priority
           />
         </Link>
@@ -69,7 +83,7 @@ export const SiteHeader: React.FC = () => {
         </div>
 
         <button
-          className="md:hidden p-2 text-cream z-50 pressable"
+          className="md:hidden z-50 grid h-11 w-11 place-items-center text-cream pressable"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           aria-label={isMobileMenuOpen ? 'Cerrar menu' : 'Abrir menu'}
         >
@@ -84,33 +98,33 @@ export const SiteHeader: React.FC = () => {
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, y: -8, filter: 'blur(6px)' }}
             transition={{ duration: 0.22, ease: navEase }}
-            className="fixed inset-0 bg-[#070504] z-40 flex flex-col pt-24 px-6 pb-6"
+            className="fixed inset-x-0 top-0 z-40 flex h-[100dvh] min-h-[100dvh] flex-col overflow-y-auto bg-[#070504] px-[var(--safe-x)] pt-[calc(env(safe-area-inset-top)+5.75rem)] pb-[max(1.25rem,env(safe-area-inset-bottom))]"
           >
             <div className="absolute inset-0 hero-fire-wash opacity-45" aria-hidden="true" />
-            <nav className="relative z-10 flex flex-col gap-7 items-center flex-grow">
+            <nav className="relative z-10 flex min-h-[18rem] flex-1 flex-col items-center justify-center gap-[clamp(1.15rem,4vh,2rem)] py-6">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-2xl font-display font-black text-cream hover:text-primary uppercase tracking-[0.12em] pressable"
+                  className="w-full py-1.5 text-center font-display text-[clamp(1.45rem,7vw,2.2rem)] font-black uppercase leading-none tracking-[0.08em] text-cream hover:text-primary pressable"
                 >
                   {item.label}
                 </Link>
               ))}
             </nav>
-            <div className="relative z-10 flex flex-col gap-4 mt-auto">
+            <div className="relative z-10 mt-auto flex flex-col gap-3">
               <Link
                 href="#reservations"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full py-4 border border-white/20 text-center text-cream font-display font-black uppercase tracking-[0.12em] pressable"
+                className="flex min-h-12 w-full items-center justify-center border border-white/20 px-4 py-3 text-center font-display text-sm font-black uppercase tracking-[0.1em] text-cream pressable"
               >
                 Reservar
               </Link>
               <Link
                 href="/menu"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="w-full py-4 bg-primary text-secondary text-center font-display font-black uppercase tracking-[0.12em] pressable premium-cta"
+                className="flex min-h-14 w-full items-center justify-center bg-primary px-4 py-4 text-center font-display text-sm font-black uppercase tracking-[0.1em] text-secondary pressable premium-cta"
               >
                 Ver Carta
               </Link>

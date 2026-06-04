@@ -1,21 +1,21 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export const NoComplicationsBlock: React.FC = () => {
   return (
-    <section className="bg-primary py-24 md:py-32 select-none overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/5 skew-x-12 translate-x-1/4 pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <motion.h2 
+    <section className="relative overflow-hidden bg-primary py-20 select-none sm:py-24 md:py-32">
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2 translate-x-1/4 skew-x-12 bg-secondary/5" />
+
+      <div className="site-container relative z-10 text-center">
+        <motion.h2
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="font-display font-black text-6xl md:text-8xl lg:text-[120px] uppercase tracking-tighter text-secondary leading-none mb-8"
+          className="mx-auto mb-8 max-w-[min(100%,58rem)] break-words font-display text-[clamp(2.85rem,13.5vw,7rem)] font-black uppercase leading-[0.88] tracking-[-0.02em] text-secondary [text-wrap:balance] sm:text-[clamp(4.2rem,12vw,7rem)] lg:text-[7.5rem]"
         >
           Sin complicarte
         </motion.h2>
@@ -25,7 +25,7 @@ export const NoComplicationsBlock: React.FC = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-secondary/80 font-display font-bold text-xl md:text-3xl uppercase tracking-wider max-w-3xl mx-auto mb-12"
+          className="mx-auto mb-10 max-w-3xl font-display text-lg font-bold uppercase leading-snug tracking-[0.04em] text-secondary/80 sm:text-xl md:mb-12 md:text-3xl"
         >
           Ven con hambre. Nosotros hacemos el resto.
         </motion.p>
@@ -35,12 +35,18 @@ export const NoComplicationsBlock: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-4 sm:flex-row"
         >
-          <Link href="#reservations" className="bg-secondary text-primary font-display font-black text-sm uppercase tracking-widest px-8 py-4 hover:scale-105 transition-transform w-full sm:w-auto">
-            ¿Asegurar mesa?
+          <Link
+            href="#reservations"
+            className="flex min-h-14 w-full items-center justify-center bg-secondary px-6 py-4 text-center font-display text-sm font-black uppercase tracking-[0.08em] text-primary transition-transform hover:scale-[1.02] sm:w-auto sm:min-w-56"
+          >
+            Asegurar mesa
           </Link>
-          <a href="tel:919401241" className="bg-transparent border-2 border-secondary text-secondary font-display font-black text-sm uppercase tracking-widest px-8 py-4 hover:bg-secondary/10 transition-colors w-full sm:w-auto">
+          <a
+            href="tel:919401241"
+            className="flex min-h-14 w-full items-center justify-center border-2 border-secondary bg-transparent px-6 py-4 text-center font-display text-sm font-black uppercase tracking-[0.08em] text-secondary transition-colors hover:bg-secondary/10 sm:w-auto sm:min-w-56"
+          >
             Llamar ahora
           </a>
         </motion.div>

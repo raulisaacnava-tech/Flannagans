@@ -12,7 +12,7 @@ export const GallerySection: React.FC = () => {
 
   return (
     <section id="gallery" className="bg-[#050505] py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         <div className="mb-16">
           <p className="font-display font-bold text-xl md:text-3xl text-cream/80 max-w-2xl uppercase tracking-wider leading-relaxed">

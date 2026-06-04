@@ -10,10 +10,10 @@ export const ReservationsSection: React.FC = () => {
 
   return (
     <section id="reservations" className="bg-accent-red py-24 md:py-32 text-white border-t border-b border-[#111]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         <div className="flex flex-col lg:flex-row gap-16 justify-between">
           <div className="lg:w-1/2">
-            <h2 className="font-display font-black text-6xl md:text-8xl uppercase tracking-tighter leading-[0.9] mb-8">
+            <h2 className="font-display mb-8 text-[clamp(3.25rem,14vw,6rem)] font-black uppercase leading-[0.9] tracking-[-0.02em] [text-wrap:balance] md:text-[clamp(4.5rem,8vw,6rem)]">
               {content.reservationsTitle.split(' ').slice(0, 2).join(' ')}
               <br />
               {content.reservationsTitle.split(' ').slice(2).join(' ')}

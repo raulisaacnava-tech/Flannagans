@@ -27,10 +27,10 @@ export const MenuCategoryTabs: React.FC<{
   }, [activeCategory]);
 
   return (
-    <div className="w-full bg-[#080705]/88 backdrop-blur-2xl sticky top-[61px] z-30 py-2.5 border-b border-white/10 shadow-xl shadow-black/50">
+    <div className="sticky top-0 z-30 w-full border-b border-white/10 bg-[#080705]/88 py-2.5 shadow-xl shadow-black/50 backdrop-blur-2xl">
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto gap-2 px-4 no-scrollbar scroll-smooth"
+        className="no-scrollbar flex scroll-smooth gap-2 overflow-x-auto px-[max(1rem,env(safe-area-inset-left),env(safe-area-inset-right))]"
       >
         {categories.map(cat => {
           const isActive = activeCategory === cat.slug;
@@ -39,7 +39,7 @@ export const MenuCategoryTabs: React.FC<{
               key={cat.id}
               data-active={isActive}
               onClick={() => onSelect(cat.slug)}
-            className={`whitespace-nowrap px-4 py-2.5 rounded-full font-sans text-xs transition-[background-color,color,border-color,transform,box-shadow] duration-180 ease-[var(--ease-out-strong)] flex-shrink-0 pressable ${
+            className={`min-h-10 flex-shrink-0 whitespace-nowrap rounded-full px-4 py-2.5 font-sans text-xs transition-[background-color,color,border-color,transform,box-shadow] duration-180 ease-[var(--ease-out-strong)] pressable ${
                 isActive 
                   ? 'bg-primary text-secondary font-black shadow-[0_0_24px_rgb(250_204_21_/_0.16)]' 
                   : 'bg-white/[0.055] text-cream/72 hover:text-cream border border-white/10'

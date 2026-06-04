@@ -52,7 +52,7 @@ export const BurgerShowcase: React.FC = () => {
   }, []);
     return (
     <section id="burgers" className="bg-[#0A0A0A] py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         <div className="mb-16">
           <motion.h2 

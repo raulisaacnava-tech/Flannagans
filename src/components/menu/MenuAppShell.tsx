@@ -65,9 +65,9 @@ export const MenuAppShell: React.FC = () => {
   if (!isClient) return null; // Prevent hydration mismatch
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_50%_0%,rgb(250_204_21_/_0.12),transparent_28%),#050505] flex justify-center items-center overflow-hidden sm:py-8 sm:px-4">
+    <div className="flex min-h-screen items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_50%_0%,rgb(250_204_21_/_0.12),transparent_28%),#050505] sm:px-4 sm:py-8">
       {/* Contenedor Mockup Móvil (Centrado en Desktop) */}
-      <div className="relative w-full h-[100dvh] sm:h-[844px] sm:w-[390px] sm:max-h-[95vh] premium-mobile-shell sm:rounded-[2.4rem] sm:border-[7px] sm:border-[#1b1712] sm:shadow-[0_28px_90px_rgb(0_0_0_/_0.72),0_0_70px_rgb(250_204_21_/_0.08)] overflow-hidden flex flex-col mx-auto">
+      <div className="premium-mobile-shell relative mx-auto flex h-[100dvh] w-full max-w-[430px] flex-col overflow-hidden sm:h-[844px] sm:max-h-[95vh] sm:w-[390px] sm:rounded-[2.4rem] sm:border-[7px] sm:border-[#1b1712] sm:shadow-[0_28px_90px_rgb(0_0_0_/_0.72),0_0_70px_rgb(250_204_21_/_0.08)]">
         
         <AnimatePresence mode="wait">
           <motion.div

@@ -18,17 +18,17 @@ export const MenuHeader: React.FC<MenuHeaderProps> = ({ products = [], onViewDet
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[#090806]/82 backdrop-blur-2xl border-b border-white/10 py-3 shrink-0 select-none shadow-[0_14px_32px_rgb(0_0_0_/_0.24)]">
-        <div className="px-4 flex items-center justify-between">
+      <header className="sticky top-0 z-40 shrink-0 select-none border-b border-white/10 bg-[#090806]/82 py-3 shadow-[0_14px_32px_rgb(0_0_0_/_0.24)] backdrop-blur-2xl">
+        <div className="flex items-center justify-between px-[max(1rem,env(safe-area-inset-left),env(safe-area-inset-right))]">
           
           {/* Logo */}
           <Link href="/" className="flex items-center pressable">
-            <Image 
+            <Image
               src="/logo.webp" 
               alt="Flanagans Logo" 
               width={130} 
               height={44} 
-              className="object-contain"
+              className="h-auto max-h-11 w-[7.5rem] object-contain"
             />
           </Link>
 

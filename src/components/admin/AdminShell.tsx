@@ -171,8 +171,8 @@ export const AdminShell: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background flex flex-col lg:flex-row select-none">
-      <aside className="w-full lg:w-72 bg-dark-gray border-b lg:border-b-0 lg:border-r border-white/10 p-6 flex flex-col justify-between shrink-0">
+    <div className="min-h-screen bg-background flex flex-col lg:flex-row select-none overflow-x-hidden">
+      <aside className="w-full lg:w-72 bg-dark-gray border-b lg:border-b-0 lg:border-r border-white/10 p-4 sm:p-6 flex flex-col justify-between shrink-0">
         <div className="space-y-8">
           <div className="flex justify-between items-center pb-4 border-b border-white/10">
             <div className="flex items-center gap-2">
@@ -193,7 +193,7 @@ export const AdminShell: React.FC = () => {
             </Link>
           </div>
 
-          <nav className="flex flex-col gap-2">
+          <nav className="grid grid-cols-2 gap-2 sm:flex sm:flex-col">
             {navItems.map((btn) => {
               const Icon = btn.icon;
               const isActive = activeSection === btn.id;
@@ -201,7 +201,7 @@ export const AdminShell: React.FC = () => {
                 <button
                   key={btn.id}
                   onClick={() => setActiveSection(btn.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-none font-display font-black text-xs uppercase tracking-wider transition-colors cursor-pointer ${
+                  className={`w-full flex min-h-11 items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3 rounded-none font-display font-black text-[10px] sm:text-xs uppercase tracking-[0.08em] sm:tracking-wider transition-colors cursor-pointer ${
                     isActive
                       ? 'bg-primary text-secondary'
                       : 'text-cream/60 hover:bg-white/5 hover:text-cream'
@@ -234,7 +234,7 @@ export const AdminShell: React.FC = () => {
         </div>
       </aside>
 
-      <main className="flex-grow p-6 sm:p-10 lg:p-12 overflow-y-auto max-h-screen no-scrollbar relative">
+      <main className="relative flex-grow overflow-y-auto p-4 sm:p-8 lg:max-h-screen lg:p-12">
         <div className="max-w-5xl mx-auto space-y-12">
           {activeSection === 'dashboard' && (
             <AdminDashboard products={products} categories={categories} onNavigate={setActiveSection} />

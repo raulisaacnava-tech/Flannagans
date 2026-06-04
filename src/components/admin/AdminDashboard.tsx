@@ -110,17 +110,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ products, catego
       </div>
 
       {/* Grid de Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] gap-4 sm:gap-6">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <div
               key={index}
               onClick={() => onNavigate(stat.action)}
-              className="bg-[#0A0A0A] border border-white/10 hover:border-white/20 rounded-none p-6 shadow-none transition-all duration-300 group cursor-pointer flex justify-between items-start"
+              className="bg-[#0A0A0A] border border-white/10 hover:border-white/20 rounded-none p-4 sm:p-6 shadow-none transition-all duration-300 group cursor-pointer flex justify-between items-start gap-3"
             >
               <div className="space-y-3">
-                <span className="block text-xs font-bold text-cream/40 uppercase tracking-widest">{stat.title}</span>
+                <span className="block text-[10px] sm:text-xs font-bold text-cream/40 uppercase tracking-[0.12em]">{stat.title}</span>
                 <span className="block text-3xl font-display font-black text-cream tracking-wide group-hover:text-primary transition-colors">
                   {stat.value}
                 </span>
@@ -136,7 +136,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ products, catego
 
       {/* Caja de Consejos de Growth / Venta Visual */}
       <div className="bg-[#0A0A0A] border border-primary/20 rounded-none p-6 space-y-4">
-        <div className="flex items-center gap-2 text-primary font-display font-black text-sm uppercase tracking-widest">
+        <div className="flex items-center gap-2 text-primary font-display font-black text-xs sm:text-sm uppercase tracking-[0.1em] sm:tracking-widest">
           <Sparkles size={16} className="animate-pulse" />
           <span>Growth Tip: Aumenta tu Ticket Medio</span>
         </div>

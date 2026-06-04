@@ -36,7 +36,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false, // Optimiza la experiencia móvil tipo app al evitar el zoom accidental al hacer tap
-  themeColor: "#121212",
+    viewportFit: "cover",
+    themeColor: "#121212",
 };
 
 export default function RootLayout({
