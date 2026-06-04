@@ -15,7 +15,7 @@ export const NoComplicationsBlock: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="mx-auto mb-8 max-w-[18rem] font-display text-[3.55rem] font-black uppercase leading-[0.86] tracking-[-0.015em] text-secondary sm:max-w-[42rem] sm:text-[4.5rem] md:max-w-[54rem] md:text-[5.8rem] lg:max-w-[64rem] lg:text-[7rem]"
+          className="mx-auto mb-8 max-w-[min(100%,17rem)] text-center font-display text-[3.05rem] font-black uppercase leading-[0.9] tracking-normal text-secondary sm:max-w-[38rem] sm:text-[4rem] md:max-w-[48rem] md:text-[5rem] lg:max-w-[58rem] lg:text-[6.25rem]"
         >
           Sin{' '}
           <span className="block sm:inline">complicarte</span>
@@ -26,7 +26,7 @@ export const NoComplicationsBlock: React.FC = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="mx-auto mb-10 max-w-3xl font-display text-lg font-bold uppercase leading-snug tracking-[0.04em] text-secondary/80 sm:text-xl md:mb-12 md:text-3xl"
+          className="mx-auto mb-10 max-w-[min(100%,42rem)] px-1 font-display text-base font-bold uppercase leading-snug tracking-[0.035em] text-secondary/80 sm:text-xl md:mb-12 md:text-2xl"
         >
           Ven con hambre. Nosotros hacemos el resto.
         </motion.p>

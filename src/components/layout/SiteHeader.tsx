@@ -45,10 +45,10 @@ export const SiteHeader: React.FC = () => {
       <div className="site-container flex items-center justify-between gap-4">
         <Link
           href="/"
-          className={`relative z-50 flex items-center pressable transition-[width,height,transform] duration-200 ease-[var(--ease-out-strong)] md:h-16 md:w-[10.5rem] ${
+          className={`relative z-50 flex items-center pressable transition-[width,height,transform] duration-200 ease-[var(--ease-out-strong)] md:h-[4.5rem] md:w-[12.6rem] ${
             isScrolled || isMobileMenuOpen
-              ? 'h-14 w-[10.75rem]'
-              : 'h-20 w-[clamp(12.5rem,48vw,15rem)]'
+              ? 'h-[4.05rem] w-[12.9rem]'
+              : 'h-24 w-[clamp(15rem,55vw,18rem)]'
           }`}
           aria-label="Flanagans inicio"
           onClick={() => setIsMobileMenuOpen(false)}
