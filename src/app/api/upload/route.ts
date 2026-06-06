@@ -13,12 +13,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    // 2. Parsear form data
+    // 2. Parsear form data y validar objeto
     const formData = await request.formData();
-    const file = formData.get('file') as File | null;
+    const file = formData.get('file');
 
-    if (!file) {
-      return NextResponse.json({ error: 'No se ha proporcionado ningún archivo' }, { status: 400 });
+    if (!file || typeof file === 'string' || !file.name) {
+      return NextResponse.json({ error: 'No se ha proporcionado ningún archivo válido' }, { status: 400 });
     }
 
     // 3. Validar tipo de archivo
@@ -74,7 +74,17 @@ export async function POST(request: Request) {
     const fileUrl = `/uploads/${uniqueFilename}`;
     return NextResponse.json({ url: fileUrl });
   } catch (error) {
-    console.error('Error uploading file:', error);
-    return NextResponse.json({ error: 'Error interno al procesar la subida' }, { status: 500 });
+    const err = error as Error;
+    console.error('Error uploading file:', err);
+    try {
+      const logMessage = `[${new Date().toISOString()}] Error: ${err?.message || err}\nStack: ${err?.stack}\n\n`;
+      fs.appendFileSync(path.join(process.cwd(), 'upload_debug.log'), logMessage);
+    } catch (logError) {
+      console.error('Failed to write log file:', logError);
+    }
+    return NextResponse.json(
+      { error: `Error interno al procesar la subida: ${err?.message || err}` },
+      { status: 500 }
+    );
   }
 }
