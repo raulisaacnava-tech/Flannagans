@@ -6,7 +6,6 @@ import { useRestaurant } from '@/lib/use-restaurant';
 
 export const SiteFooter: React.FC = () => {
   const restaurant = useRestaurant();
-  const footerLogoWidth = Math.max(150, Math.round((restaurant.homepageContent?.siteLogoMaxWidth || 240) * 0.82));
 
   return (
     <footer className="bg-[#050505] border-t border-white/10 pt-20 pb-10">
@@ -18,7 +17,7 @@ export const SiteFooter: React.FC = () => {
                 src={restaurant.logoUrl || '/logo.webp'}
                 alt={`${restaurant.name} logo`}
                 className="object-contain"
-                style={{ width: footerLogoWidth, height: 'auto' }}
+                style={{ width: 236, height: 'auto' }}
               />
             </Link>
             <p className="text-cream/50 text-sm max-w-xs">{restaurant.welcomeMessage}</p>

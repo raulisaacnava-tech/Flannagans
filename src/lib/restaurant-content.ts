@@ -1,7 +1,6 @@
 import { HomepageContent, Restaurant } from '@/types/restaurant';
 
 export const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
-  siteLogoMaxWidth: 240,
   heroEyebrow: 'Smash, fuego y pan brutal',
   heroTitle: 'Burgers hechas al fuego para pedir otra',
   heroDescription: 'Carne sellada, cheddar fundido, pan tostado y una carta visual pensada para abrir el apetito desde el movil.',

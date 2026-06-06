@@ -23,8 +23,8 @@ export const MenuIntroScreen: React.FC<{ onEnter: () => void }> = ({ onEnter }) 
           <Image 
             src="/logo.webp" 
             alt="Flanagans Logo" 
-            width={280} 
-            height={120} 
+            width={336} 
+            height={144} 
             className="object-contain"
             priority
           />

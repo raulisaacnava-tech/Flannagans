@@ -22,12 +22,12 @@ export const MenuHeader: React.FC<MenuHeaderProps> = ({ products = [], onViewDet
         <div className="flex items-center justify-between px-[max(1rem,env(safe-area-inset-left),env(safe-area-inset-right))]">
           
           {/* Logo */}
-          <Link href="/" className="flex h-[4.7rem] w-[min(14rem,46vw)] items-center pressable">
+          <Link href="/" className="flex h-[5.65rem] w-[min(16.8rem,55vw)] items-center pressable">
             <Image
               src="/logo.webp" 
               alt="Flanagans Logo" 
-              width={224} 
-              height={76} 
+              width={269} 
+              height={91} 
               className="h-auto max-h-full w-full object-contain"
             />
           </Link>

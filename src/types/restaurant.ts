@@ -31,7 +31,6 @@ export interface DinerReview {
 }
 
 export interface HomepageContent {
-  siteLogoMaxWidth: number;
   heroEyebrow: string;
   heroTitle: string;
   heroDescription: string;

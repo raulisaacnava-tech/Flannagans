@@ -20,10 +20,7 @@ export const SiteHeader: React.FC = () => {
   const restaurant = useRestaurant();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const logoWidth = restaurant.homepageContent?.siteLogoMaxWidth || 240;
-  const compactLogoWidth = Math.round(logoWidth * 0.84);
-  const mobileLogoWidth = Math.max(132, Math.round(logoWidth * 0.72));
-  const activeLogoWidth = isScrolled || isMobileMenuOpen ? compactLogoWidth : logoWidth;
+  const logoWidth = isScrolled || isMobileMenuOpen ? 242 : 288;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -52,8 +49,8 @@ export const SiteHeader: React.FC = () => {
           href="/"
           className="relative z-50 flex items-center pressable transition-[width,height,transform] duration-200 ease-[var(--ease-out-strong)]"
           style={{
-            width: `clamp(${mobileLogoWidth}px, 40vw, ${activeLogoWidth}px)`,
-            height: `clamp(54px, 12vw, ${Math.round(activeLogoWidth * 0.36)}px)`,
+            width: `clamp(207px, 46vw, ${logoWidth}px)`,
+            height: `clamp(65px, 13vw, ${Math.round(logoWidth * 0.36)}px)`,
           }}
           aria-label="Flanagans inicio"
           onClick={() => setIsMobileMenuOpen(false)}
