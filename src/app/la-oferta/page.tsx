@@ -19,7 +19,6 @@ import {
   X,
 } from 'lucide-react';
 import { SiteFooter } from '@/components/layout/SiteFooter';
-import { SiteHeader } from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
   title: 'Oferta Exclusiva Flanagans',
@@ -108,6 +107,8 @@ const timeline = [
   ['Desde mes 4', '89 euros al mes para continuar con el sistema activo y mantenido.'],
 ];
 
+const whatsappUrl = 'https://wa.link/hxf4aj';
+
 function ScreenShot({
   src,
   alt,
@@ -137,10 +138,27 @@ function ScreenShot({
 export default function OfferPage() {
   return (
     <div className="min-h-screen bg-[#050505] text-cream selection:bg-primary selection:text-secondary">
-      <SiteHeader />
+      <header className="absolute left-0 right-0 top-0 z-50 py-5 sm:py-7">
+        <div className="site-container flex justify-center">
+          <Link
+            href="/"
+            aria-label="Flanagans inicio"
+            className="relative block h-[72px] w-[210px] sm:h-[92px] sm:w-[270px]"
+          >
+            <Image
+              src="/logo.webp"
+              alt="Flanagans Burguer"
+              fill
+              priority
+              sizes="270px"
+              className="object-contain"
+            />
+          </Link>
+        </div>
+      </header>
 
       <main>
-        <section className="relative overflow-hidden bg-[#080604] pt-32 pb-14 sm:pt-40 lg:pt-44 lg:pb-20">
+        <section className="relative overflow-hidden bg-[#080604] pt-36 pb-14 sm:pt-44 lg:pt-48 lg:pb-20">
           <div className="absolute inset-0 hero-fire-wash opacity-40" aria-hidden="true" />
           <div className="absolute inset-x-0 bottom-0 h-px bg-primary/30" aria-hidden="true" />
 
@@ -173,7 +191,7 @@ export default function OfferPage() {
                     <ArrowRight size={17} />
                   </Link>
                   <Link
-                    href="/admin/login"
+                    href="#panel-admin"
                     className="inline-flex min-h-14 items-center justify-center border border-white/20 px-7 py-4 font-display text-sm font-black uppercase tracking-[0.12em] text-cream hover:bg-white/5"
                   >
                     Ver panel admin
@@ -264,7 +282,7 @@ export default function OfferPage() {
           </div>
         </section>
 
-        <section className="bg-[#0A0A0A] py-20 lg:py-28">
+        <section id="panel-admin" className="scroll-mt-24 bg-[#0A0A0A] py-20 lg:scroll-mt-28 lg:py-28">
           <div className="site-container">
             <div className="mb-10 grid gap-5 lg:grid-cols-[0.55fr_1fr] lg:items-end">
               <div>
@@ -481,7 +499,9 @@ export default function OfferPage() {
                   <ArrowRight size={17} />
                 </Link>
                 <Link
-                  href="/#reservations"
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex min-h-14 items-center justify-center gap-2 border border-white/20 px-7 py-4 font-display text-sm font-black uppercase tracking-[0.12em] text-cream hover:bg-white/5"
                 >
                   Contacto
