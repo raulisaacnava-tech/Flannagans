@@ -57,9 +57,10 @@ export const MediaUploadField: React.FC<MediaUploadFieldProps> = ({
 
       const data = await response.json();
       onChange(data.url);
-    } catch (err: any) {
-      console.error(err);
-      setError(err.message || 'Error al subir el archivo');
+    } catch (err) {
+      const errorObj = err as Error;
+      console.error(errorObj);
+      setError(errorObj.message || 'Error al subir el archivo');
     } finally {
       setUploading(false);
       if (fileInputRef.current) {

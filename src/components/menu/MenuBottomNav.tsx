@@ -11,7 +11,7 @@ export const MenuBottomNav: React.FC<{
   onChange: (view: 'menu' | 'video') => void;
 }> = ({ activeView, onChange }) => {
   return (
-    <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-50 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:left-1/2 sm:max-w-md sm:-translate-x-1/2">
+    <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-50 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:left-1/2 md:max-w-md md:-translate-x-1/2">
       <div className="bg-[#11100d]/92 backdrop-blur-2xl border border-white/12 rounded-full p-1.5 flex items-center shadow-[0_18px_48px_rgb(0_0_0_/_0.62)] pointer-events-auto">
         <button
           onClick={() => onChange('video')}

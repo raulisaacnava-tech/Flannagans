@@ -94,17 +94,18 @@ export async function POST(request: Request) {
           }
           throw new Error(`Error en Supabase Storage (${response.status}): ${errText}`);
         }
-      } catch (supaError: any) {
-        console.error('Supabase upload exception:', supaError);
+      } catch (supaError) {
+        const sError = supaError as Error;
+        console.error('Supabase upload exception:', sError);
         
         // Si el error es sobre el bucket inexistente, lo propagamos para guiar al usuario
-        if (supaError.message && supaError.message.includes('media')) {
-          throw supaError;
+        if (sError.message && sError.message.includes('media')) {
+          throw sError;
         }
 
         // Si estamos en Vercel, no podemos hacer fallback local ya que fallará siempre
         if (process.env.VERCEL || process.cwd().startsWith('/var/task')) {
-          throw supaError;
+          throw sError;
         }
         
         console.log('Falling back to local disk storage...');

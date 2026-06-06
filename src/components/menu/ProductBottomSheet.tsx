@@ -54,7 +54,7 @@ export const ProductBottomSheet: React.FC<{
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={{ top: 0.02, bottom: 0.28 }}
         onDragEnd={handleDragEnd}
-        className="fixed bottom-0 left-0 right-0 sm:left-1/2 sm:-translate-x-1/2 sm:max-w-md w-full bg-[#11100d] rounded-t-[1.35rem] z-50 flex flex-col max-h-[90vh] shadow-[0_-28px_70px_rgb(0_0_0_/_0.72)] border-t border-x border-white/12 overflow-hidden"
+        className="fixed bottom-0 left-0 right-0 md:left-1/2 md:-translate-x-1/2 md:max-w-md w-full bg-[#11100d] rounded-t-[1.35rem] z-50 flex flex-col max-h-[90vh] shadow-[0_-28px_70px_rgb(0_0_0_/_0.72)] border-t border-x border-white/12 overflow-hidden"
       >
         <div className="w-full flex justify-center pt-3 pb-1 shrink-0 cursor-grab active:cursor-grabbing">
           <div className="w-12 h-1.5 bg-white/24 rounded-full" />

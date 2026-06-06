@@ -65,9 +65,9 @@ export const MenuAppShell: React.FC = () => {
   if (!isClient) return null; // Prevent hydration mismatch
 
   return (
-    <div className="flex min-h-screen items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_50%_0%,rgb(250_204_21_/_0.12),transparent_28%),#050505] sm:px-4 sm:py-8">
-      {/* Contenedor Mockup Móvil (Centrado en Desktop) */}
-      <div className="premium-mobile-shell relative mx-auto flex h-[100dvh] w-full max-w-[430px] flex-col overflow-hidden sm:h-[844px] sm:max-h-[95vh] sm:w-[390px] sm:rounded-[2.4rem] sm:border-[7px] sm:border-[#1b1712] sm:shadow-[0_28px_90px_rgb(0_0_0_/_0.72),0_0_70px_rgb(250_204_21_/_0.08)]">
+    <div className="flex min-h-screen items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_50%_0%,rgb(250_204_21_/_0.12),transparent_28%),#050505] md:px-4 md:py-8">
+      {/* Contenedor Adaptable (En móvil es 100% full viewport, en desktop es un dashboard responsivo de alta gama sin borde grueso de teléfono) */}
+      <div className="premium-mobile-shell relative mx-auto flex h-[100dvh] w-full flex-col overflow-hidden md:h-[90vh] md:max-h-[900px] md:max-w-[1000px] lg:max-w-[1200px] md:rounded-3xl md:border md:border-white/10 md:shadow-[0_32px_96px_rgba(0,0,0,0.85),0_0_80px_rgb(250_204_21_/_0.03)]">
         
         <AnimatePresence mode="wait">
           <motion.div
