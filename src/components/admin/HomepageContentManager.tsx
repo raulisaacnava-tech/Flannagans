@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Image as ImageIcon, MapPinned, MonitorPlay, Quote, Save } from 'lucide-react';
+import { Bike, Image as ImageIcon, MapPinned, MonitorPlay, Quote, Save, Star } from 'lucide-react';
 import { DEFAULT_HOMEPAGE_CONTENT } from '@/lib/restaurant-content';
 import { HomepageContent, Restaurant } from '@/types/restaurant';
 
@@ -11,6 +11,8 @@ interface HomepageContentManagerProps {
 }
 
 type GalleryDraft = HomepageContent['galleryItems'];
+type DeliveryDraft = HomepageContent['deliveryPartners'];
+type ReviewsDraft = HomepageContent['reviews'];
 
 export const HomepageContentManager: React.FC<HomepageContentManagerProps> = ({
   restaurant,
@@ -37,6 +39,20 @@ export const HomepageContentManager: React.FC<HomepageContentManagerProps> = ({
       itemIndex === index ? { ...item, [key]: value } : item,
     );
     updateField('galleryItems', next);
+  };
+
+  const updateDeliveryPartner = (index: number, key: keyof DeliveryDraft[number], value: string) => {
+    const next = draft.deliveryPartners.map((partner, itemIndex) =>
+      itemIndex === index ? { ...partner, [key]: value } : partner,
+    );
+    updateField('deliveryPartners', next);
+  };
+
+  const updateReview = (index: number, key: keyof ReviewsDraft[number], value: string | number) => {
+    const next = draft.reviews.map((review, itemIndex) =>
+      itemIndex === index ? { ...review, [key]: value } : review,
+    );
+    updateField('reviews', next);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -219,6 +235,90 @@ export const HomepageContentManager: React.FC<HomepageContentManagerProps> = ({
               <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Canal de reserva</span>
               <input value={draft.reservationsChannelLabel} onChange={(e) => updateField('reservationsChannelLabel', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
             </label>
+          </div>
+        </section>
+
+        <section className="bg-[#0A0A0A] border border-white/10 p-6 sm:p-8 space-y-5">
+          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+            <Bike className="text-primary" size={18} />
+            <h3 className="font-display font-black text-sm text-cream uppercase tracking-wider">
+              Delivery
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Titulo delivery</span>
+              <input value={draft.deliveryTitle} onChange={(e) => updateField('deliveryTitle', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Descripcion delivery</span>
+              <input value={draft.deliveryDescription} onChange={(e) => updateField('deliveryDescription', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {draft.deliveryPartners.map((partner, index) => (
+              <div key={partner.id} className="border border-white/10 p-4 space-y-3">
+                <span className="block text-[10px] font-bold text-primary uppercase tracking-widest">Empresa {index + 1}</span>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Nombre</span>
+                  <input value={partner.name} onChange={(e) => updateDeliveryPartner(index, 'name', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+                </label>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL logo</span>
+                  <input value={partner.logoUrl} onChange={(e) => updateDeliveryPartner(index, 'logoUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+                </label>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL pedido</span>
+                  <input value={partner.orderUrl} onChange={(e) => updateDeliveryPartner(index, 'orderUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+                </label>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-[#0A0A0A] border border-white/10 p-6 sm:p-8 space-y-5">
+          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+            <Star className="text-primary" size={18} />
+            <h3 className="font-display font-black text-sm text-cream uppercase tracking-wider">
+              ReseÃ±as Dinamicas
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Titulo reseÃ±as</span>
+              <input value={draft.reviewsTitle} onChange={(e) => updateField('reviewsTitle', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+            <label className="space-y-1">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Descripcion reseÃ±as</span>
+              <input value={draft.reviewsDescription} onChange={(e) => updateField('reviewsDescription', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            </label>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {draft.reviews.map((review, index) => (
+              <div key={review.id} className="border border-white/10 p-4 space-y-3">
+                <span className="block text-[10px] font-bold text-primary uppercase tracking-widest">ReseÃ±a {index + 1}</span>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Nombre</span>
+                  <input value={review.name} onChange={(e) => updateReview(index, 'name', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+                </label>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Detalle</span>
+                  <input value={review.detail} onChange={(e) => updateReview(index, 'detail', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+                </label>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Puntuacion</span>
+                  <input type="number" min={1} max={5} value={review.rating} onChange={(e) => updateReview(index, 'rating', Number(e.target.value))} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+                </label>
+                <label className="space-y-1 block">
+                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Texto</span>
+                  <textarea value={review.quote} onChange={(e) => updateReview(index, 'quote', e.target.value)} rows={4} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream p-4 text-xs focus:outline-none resize-none font-semibold" />
+                </label>
+              </div>
+            ))}
           </div>
         </section>
 

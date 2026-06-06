@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Restaurant, OpeningHours } from '@/types/restaurant';
 import { Save, Sparkles, Clock, Globe } from 'lucide-react';
+import { DEFAULT_HOMEPAGE_CONTENT } from '@/lib/restaurant-content';
 
 interface RestaurantSettingsProps {
   restaurant: Restaurant;
@@ -15,6 +16,7 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const [instagramUrl, setInstagramUrl] = useState('');
   const [logoUrl, setLogoUrl] = useState('');
+  const [siteLogoMaxWidth, setSiteLogoMaxWidth] = useState(DEFAULT_HOMEPAGE_CONTENT.siteLogoMaxWidth);
   const [address, setAddress] = useState('');
   const [welcomeMessage, setWelcomeMessage] = useState('');
   const [openingHours, setOpeningHours] = useState<OpeningHours[]>([]);
@@ -26,6 +28,7 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
     setWhatsappNumber(restaurant.whatsappNumber);
     setInstagramUrl(restaurant.instagramUrl);
     setLogoUrl(restaurant.logoUrl);
+    setSiteLogoMaxWidth(restaurant.homepageContent?.siteLogoMaxWidth || DEFAULT_HOMEPAGE_CONTENT.siteLogoMaxWidth);
     setAddress(restaurant.address);
     setWelcomeMessage(restaurant.welcomeMessage || '');
     setOpeningHours(restaurant.openingHours);
@@ -41,6 +44,10 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
       whatsappNumber,
       instagramUrl,
       logoUrl,
+      homepageContent: {
+        ...(restaurant.homepageContent || DEFAULT_HOMEPAGE_CONTENT),
+        siteLogoMaxWidth,
+      },
       address,
       welcomeMessage,
       openingHours,
@@ -150,6 +157,36 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
               onChange={(e) => setLogoUrl(e.target.value)}
               className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream rounded-none px-4 py-2.5 text-xs focus:outline-none transition-colors duration-300 font-semibold"
             />
+          </div>
+
+          <div className="space-y-3 border border-white/10 bg-black/25 p-4">
+            <div className="flex items-center justify-between gap-4">
+              <label className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">
+                TamaÃ±o general del logo
+              </label>
+              <span className="font-mono text-xs font-bold text-primary">{siteLogoMaxWidth}px</span>
+            </div>
+            <input
+              type="range"
+              min={160}
+              max={320}
+              step={4}
+              value={siteLogoMaxWidth}
+              onChange={(e) => setSiteLogoMaxWidth(Number(e.target.value))}
+              className="w-full accent-primary"
+            />
+            <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-widest text-cream/30">
+              <span>Compacto</span>
+              <span>Grande</span>
+            </div>
+            <div className="border border-white/10 bg-[#050505] px-4 py-5">
+              <img
+                src={logoUrl || '/logo.webp'}
+                alt="Vista previa del logo"
+                className="h-auto max-h-24 object-contain"
+                style={{ width: siteLogoMaxWidth }}
+              />
+            </div>
           </div>
 
           <div className="space-y-1">

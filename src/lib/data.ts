@@ -899,7 +899,7 @@ export const INITIAL_PRODUCTS: Product[] = [
 export const INITIAL_RESTAURANT: Restaurant = {
   id: 'flanagans',
   name: 'Flanagans Burguer',
-  logoUrl: '/images/logo.png',
+  logoUrl: '/logo.webp',
   brandColors: {
     primary: '#EAB308',
     secondary: '#121212',

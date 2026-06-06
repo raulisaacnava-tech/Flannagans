@@ -15,7 +15,23 @@ export interface HomepageGalleryItem {
   label: string;
 }
 
+export interface DeliveryPartner {
+  id: string;
+  name: string;
+  logoUrl: string;
+  orderUrl: string;
+}
+
+export interface DinerReview {
+  id: string;
+  name: string;
+  quote: string;
+  rating: number;
+  detail: string;
+}
+
 export interface HomepageContent {
+  siteLogoMaxWidth: number;
   heroEyebrow: string;
   heroTitle: string;
   heroDescription: string;
@@ -37,6 +53,12 @@ export interface HomepageContent {
   visualMenuDescription: string;
   visualMenuPrimaryCtaLabel: string;
   visualMenuSecondaryCtaLabel: string;
+  deliveryTitle: string;
+  deliveryDescription: string;
+  deliveryPartners: DeliveryPartner[];
+  reviewsTitle: string;
+  reviewsDescription: string;
+  reviews: DinerReview[];
   brandQuoteText: string;
   brandQuoteAccent: string;
 }

@@ -11,8 +11,10 @@ import { FeaturedBurgerSection } from '@/components/home/FeaturedBurgerSection';
 import { BurgerShowcase } from '@/components/home/BurgerShowcase';
 import { PromoPosters } from '@/components/home/PromoPosters';
 import { VisualMenuPreview } from '@/components/home/VisualMenuPreview';
+import { DeliverySection } from '@/components/home/DeliverySection';
 import { FlanaCoinsBlock } from '@/components/home/FlanaCoinsBlock';
 import { GallerySection } from '@/components/home/GallerySection';
+import { ReviewsSection } from '@/components/home/ReviewsSection';
 import { ReservationsSection } from '@/components/home/ReservationsSection';
 import { LocationSection } from '@/components/home/LocationSection';
 import { BrandQuote } from '@/components/home/BrandQuote';
@@ -49,8 +51,10 @@ export default function HomePage() {
         <BurgerShowcase />
         <PromoPosters />
         <VisualMenuPreview />
+        <DeliverySection />
         <FlanaCoinsBlock />
         <GallerySection />
+        <ReviewsSection />
         <ReservationsSection />
         <LocationSection />
         <BrandQuote />

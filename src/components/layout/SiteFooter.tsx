@@ -2,11 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRestaurant } from '@/lib/use-restaurant';
 
 export const SiteFooter: React.FC = () => {
   const restaurant = useRestaurant();
+  const footerLogoWidth = Math.max(150, Math.round((restaurant.homepageContent?.siteLogoMaxWidth || 240) * 0.82));
 
   return (
     <footer className="bg-[#050505] border-t border-white/10 pt-20 pb-10">
@@ -14,12 +14,11 @@ export const SiteFooter: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="flex items-center mb-6">
-              <Image
-                src="/logo.webp"
+              <img
+                src={restaurant.logoUrl || '/logo.webp'}
                 alt={`${restaurant.name} logo`}
-                width={240}
-                height={80}
                 className="object-contain"
+                style={{ width: footerLogoWidth, height: 'auto' }}
               />
             </Link>
             <p className="text-cream/50 text-sm max-w-xs">{restaurant.welcomeMessage}</p>
@@ -29,8 +28,9 @@ export const SiteFooter: React.FC = () => {
             <h4 className="font-display font-black text-sm uppercase tracking-widest text-cream mb-6">Navegacion</h4>
             <ul className="space-y-4">
               <li><Link href="/menu" className="text-cream/50 hover:text-primary text-sm font-bold uppercase tracking-wider transition-colors">Ver carta visual</Link></li>
-              <li><Link href="#gallery" className="text-cream/50 hover:text-primary text-sm font-bold uppercase tracking-wider transition-colors">Galeria</Link></li>
-              <li><Link href="#location" className="text-cream/50 hover:text-primary text-sm font-bold uppercase tracking-wider transition-colors">Ubicacion</Link></li>
+              <li><Link href="/#gallery" className="text-cream/50 hover:text-primary text-sm font-bold uppercase tracking-wider transition-colors">Galeria</Link></li>
+              <li><Link href="/#location" className="text-cream/50 hover:text-primary text-sm font-bold uppercase tracking-wider transition-colors">Ubicacion</Link></li>
+              <li><Link href="/la-oferta" className="text-cream/50 hover:text-primary text-sm font-bold uppercase tracking-wider transition-colors">La oferta</Link></li>
             </ul>
           </div>
 

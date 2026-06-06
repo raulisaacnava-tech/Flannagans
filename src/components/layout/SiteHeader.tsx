@@ -1,24 +1,29 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LanguageSelector } from '@/components/menu/LanguageSelector';
+import { useRestaurant } from '@/lib/use-restaurant';
 
 const navEase = [0.23, 1, 0.32, 1] as const;
 
 const navItems = [
-  { href: '#burgers', label: 'Burgers' },
-  { href: '#promos', label: 'Promos' },
-  { href: '#gallery', label: 'Nosotros' },
-  { href: '#location', label: 'Ubicacion' },
+  { href: '/#burgers', label: 'Burgers' },
+  { href: '/#promos', label: 'Promos' },
+  { href: '/#gallery', label: 'Nosotros' },
+  { href: '/#location', label: 'Ubicacion' },
 ];
 
 export const SiteHeader: React.FC = () => {
+  const restaurant = useRestaurant();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const logoWidth = restaurant.homepageContent?.siteLogoMaxWidth || 240;
+  const compactLogoWidth = Math.round(logoWidth * 0.84);
+  const mobileLogoWidth = Math.max(132, Math.round(logoWidth * 0.72));
+  const activeLogoWidth = isScrolled || isMobileMenuOpen ? compactLogoWidth : logoWidth;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -45,21 +50,18 @@ export const SiteHeader: React.FC = () => {
       <div className="site-container flex items-center justify-between gap-4">
         <Link
           href="/"
-          className={`relative z-50 flex items-center pressable transition-[width,height,transform] duration-200 ease-[var(--ease-out-strong)] md:h-[4.5rem] md:w-[12.6rem] ${
-            isScrolled || isMobileMenuOpen
-              ? 'h-[4.3rem] w-[13.2rem]'
-              : 'h-[5.4rem] w-[clamp(13.8rem,44vw,16rem)]'
-          }`}
+          className="relative z-50 flex items-center pressable transition-[width,height,transform] duration-200 ease-[var(--ease-out-strong)]"
+          style={{
+            width: `clamp(${mobileLogoWidth}px, 40vw, ${activeLogoWidth}px)`,
+            height: `clamp(54px, 12vw, ${Math.round(activeLogoWidth * 0.36)}px)`,
+          }}
           aria-label="Flanagans inicio"
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          <Image
-            src="/logo.webp"
-            alt="Flanagans Logo"
-            width={240}
-            height={82}
+          <img
+            src={restaurant.logoUrl || '/logo.webp'}
+            alt={`${restaurant.name} logo`}
             className="h-auto max-h-full w-full object-contain"
-            priority
           />
         </Link>
 
@@ -77,7 +79,7 @@ export const SiteHeader: React.FC = () => {
 
         <div className="hidden md:flex items-center gap-4">
           <LanguageSelector />
-          <Link href="#reservations" className="text-xs font-bold text-cream hover:text-primary uppercase tracking-[0.14em] transition-colors duration-[160ms]">
+          <Link href="/#reservations" className="text-xs font-bold text-cream hover:text-primary uppercase tracking-[0.14em] transition-colors duration-[160ms]">
             Reservar
           </Link>
           <Link
@@ -124,7 +126,7 @@ export const SiteHeader: React.FC = () => {
             </nav>
             <div className="relative z-10 mt-auto flex flex-col gap-3">
               <Link
-                href="#reservations"
+                href="/#reservations"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex min-h-12 w-full items-center justify-center border border-white/20 px-4 py-3 text-center font-display text-sm font-black uppercase tracking-[0.1em] text-cream pressable"
               >
