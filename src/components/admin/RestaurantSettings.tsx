@@ -5,6 +5,8 @@ import { Restaurant, OpeningHours } from '@/types/restaurant';
 import { Save, Sparkles, Clock, Globe } from 'lucide-react';
 import { DEFAULT_HOMEPAGE_CONTENT } from '@/lib/restaurant-content';
 
+const RESTAURANT_KEY = 'flanagans_restaurant_v5';
+
 interface RestaurantSettingsProps {
   restaurant: Restaurant;
   onSave: (restaurant: Restaurant) => void;
@@ -54,6 +56,28 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
     };
 
     onSave(updated);
+  };
+
+  const handleLogoSizeChange = (nextSize: number) => {
+    setSiteLogoMaxWidth(nextSize);
+
+    if (typeof window === 'undefined') return;
+
+    const storedRestaurant = window.localStorage.getItem(RESTAURANT_KEY);
+    const currentRestaurant = storedRestaurant
+      ? (JSON.parse(storedRestaurant) as Restaurant)
+      : restaurant;
+
+    const updatedRestaurant: Restaurant = {
+      ...currentRestaurant,
+      homepageContent: {
+        ...(currentRestaurant.homepageContent || DEFAULT_HOMEPAGE_CONTENT),
+        siteLogoMaxWidth: nextSize,
+      },
+    };
+
+    window.localStorage.setItem(RESTAURANT_KEY, JSON.stringify(updatedRestaurant));
+    window.dispatchEvent(new Event('flanagans_restaurant_updated'));
   };
 
   const handleUpdateHours = (index: number, newHours: string) => {
@@ -172,7 +196,7 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
               max={320}
               step={4}
               value={siteLogoMaxWidth}
-              onChange={(e) => setSiteLogoMaxWidth(Number(e.target.value))}
+              onChange={(e) => handleLogoSizeChange(Number(e.target.value))}
               className="w-full accent-primary"
             />
             <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-widest text-cream/30">
