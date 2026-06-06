@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Camera, Check, Clock, Euro, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, Check, Clock, Euro, ShieldCheck } from 'lucide-react';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 
@@ -29,13 +29,13 @@ const packages = [
   {
     name: 'Piloto Estandar',
     price: '500 €',
-    description: 'Cliente entrega logo, textos, fotos, videos, platos y precios.',
+    description: 'El cliente entrega logo, textos, fotos, videos, platos y precios.',
     tone: 'bg-cream text-secondary',
   },
   {
     name: 'Piloto Pro',
     price: '700 €',
-    description: 'Incluye todo lo anterior y una sesion basica para fotos o videos cortos de productos principales.',
+    description: 'Incluye todo lo anterior y apoyo con contenido visual basico para productos principales.',
     tone: 'bg-primary text-secondary',
   },
 ];
@@ -82,10 +82,10 @@ export default function OfferPage() {
               <div className="border border-primary/35 bg-black/50 p-6">
                 <div className="flex items-center gap-3 text-primary">
                   <ShieldCheck size={24} />
-                  <span className="font-display text-sm font-black uppercase tracking-[0.14em]">Condicion especial</span>
+                  <span className="font-display text-sm font-black uppercase tracking-[0.14em]">Proyecto piloto</span>
                 </div>
                 <p className="mt-5 text-sm font-semibold leading-relaxed text-cream/70">
-                  Esta propuesta tiene precio piloto porque el restaurante funciona como primer caso demostrable. Si luego se replica en otros locales, la base ya queda creada.
+                  Esta propuesta parte de una base ya preparada para publicar, editar y escalar. Si luego el restaurante abre otros locales, se puede replicar con mayor rapidez.
                 </p>
               </div>
             </div>
@@ -122,7 +122,7 @@ export default function OfferPage() {
                 Dos opciones claras
               </h2>
               <p className="max-w-md text-sm font-semibold leading-relaxed text-cream/58">
-                Para este cliente puntual, la recomendacion es elegir segun quien aporta el material visual.
+                La eleccion depende de quien aporta el material visual inicial.
               </p>
             </div>
 
@@ -168,22 +168,22 @@ export default function OfferPage() {
           <div className="site-container">
             <div className="grid gap-10 lg:grid-cols-[0.48fr_1fr] lg:items-start">
               <div className="flex gap-4">
-                <Sparkles className="mt-2 shrink-0" size={28} />
+                <ShieldCheck className="mt-2 shrink-0" size={28} />
                 <div>
                   <h2 className="font-display text-[clamp(2.8rem,9vw,5.2rem)] font-black uppercase leading-[0.9] tracking-[-0.02em]">
-                    Como se lo explicaria al cliente
+                    Resumen de la propuesta
                   </h2>
                 </div>
               </div>
               <div className="space-y-5 text-lg font-semibold leading-relaxed text-white/82">
                 <p>
-                  Esto no es solamente una pagina web ni un menu en PDF. Es una herramienta comercial para el restaurante: una landing moderna, una carta digital visual y un panel administrativo para actualizar productos, precios, promociones, fotos y videos.
+                  Esta propuesta entrega una landing moderna, una carta digital visual y un panel administrativo para actualizar productos, precios, promociones, fotos y videos sin depender de cambios externos cada vez.
                 </p>
                 <p>
-                  La opcion de 500 € funciona si el cliente entrega logo, textos, fotos, videos y precios. La opcion de 700 € incluye apoyo con contenido visual basico para productos principales.
+                  La opcion de 500 € es ideal cuando el restaurante ya entrega logo, textos, fotos, videos y precios. La opcion de 700 € incluye apoyo con contenido visual basico para productos principales.
                 </p>
                 <p>
-                  El dominio es del cliente. La parte tecnica de alojamiento, seguridad y mantenimiento queda cubierta con 150 € al ano. Los cambios especiales fuera del panel se trabajan con una bolsa minima de 5 horas por 75 €.
+                  El dominio queda a nombre del cliente. El alojamiento, la seguridad y el mantenimiento tecnico se cubren con 150 € al ano. Los cambios especiales fuera del panel se trabajan con una bolsa minima de 5 horas por 75 €.
                 </p>
               </div>
             </div>
@@ -191,19 +191,20 @@ export default function OfferPage() {
         </section>
 
         <section className="bg-[#050505] py-16">
-          <div className="site-container flex flex-col gap-6 border border-primary/25 bg-[#0A0A0A] p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
-            <div className="flex items-start gap-4">
-              <Camera className="mt-1 shrink-0 text-primary" size={24} />
-              <div>
-                <h2 className="font-display text-2xl font-black uppercase tracking-[0.04em] text-cream">Recomendacion para este piloto</h2>
-                <p className="mt-2 max-w-2xl text-sm font-semibold leading-relaxed text-cream/60">
-                  500 € + 150 €/ano si el restaurante entrega todo el material. 700 € + 150 €/ano si necesita apoyo de fotos o videos sencillos para arrancar con mejor presencia visual.
+          <div className="site-container">
+            <div className="grid gap-4 border border-primary/25 bg-[#0A0A0A] p-6 sm:p-8 lg:grid-cols-2 lg:items-center">
+              <div className="space-y-3">
+                <h2 className="font-display text-2xl font-black uppercase tracking-[0.04em] text-cream">
+                  Opcion recomendada para este cliente
+                </h2>
+                <p className="max-w-2xl text-sm font-semibold leading-relaxed text-cream/60">
+                  500 € + 150 € al ano si el restaurante entrega todo el material. 700 € + 150 € al ano si prefiere apoyo con fotos o videos sencillos para arrancar con mejor presencia visual.
                 </p>
               </div>
-            </div>
-            <div className="flex items-center gap-2 text-primary">
-              <Clock size={18} />
-              <span className="font-display text-sm font-black uppercase tracking-[0.12em]">Entrega piloto</span>
+              <div className="flex items-center gap-2 justify-start lg:justify-end text-primary">
+                <Clock size={18} />
+                <span className="font-display text-sm font-black uppercase tracking-[0.12em]">Entrega piloto</span>
+              </div>
             </div>
           </div>
         </section>
