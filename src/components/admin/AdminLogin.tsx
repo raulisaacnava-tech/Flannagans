@@ -28,7 +28,8 @@ export const AdminLogin: React.FC = () => {
         router.refresh();
         router.push('/admin');
       } else {
-        setError('Contrasena incorrecta. Por favor, vuelve a intentarlo.');
+        const data = (await response.json().catch(() => null)) as { message?: string } | null;
+        setError(data?.message || 'Contrasena incorrecta. Por favor, vuelve a intentarlo.');
       }
     } catch {
       setError('No se pudo verificar el acceso. Revisa la conexion e intentalo de nuevo.');

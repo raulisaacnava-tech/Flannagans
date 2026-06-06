@@ -6,6 +6,7 @@ const SESSION_TTL_SECONDS = 60 * 60 * 8;
 const getSecret = () =>
   process.env.ADMIN_SESSION_SECRET ||
   process.env.ADMIN_PASSWORD ||
+  process.env.NEXT_PUBLIC_ADMIN_PASSWORD ||
   'flanagans-demo-session-secret';
 
 const sign = (value: string) =>

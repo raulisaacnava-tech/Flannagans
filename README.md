@@ -158,7 +158,9 @@ Este proyecto está optimizado y listo para ser desplegado en **Vercel** en 2 mi
 1. Registra tu cuenta en [Vercel](https://vercel.com).
 2. Haz clic en **Add New** > **Project** y vincula tu repositorio de GitHub.
 3. En la sección **Environment Variables**, añade:
-   - `NEXT_PUBLIC_ADMIN_PASSWORD` = `Mostoles987`
+   - `ADMIN_PASSWORD` = `Mostoles987`
+   - `ADMIN_SESSION_SECRET` = un secreto largo y aleatorio
+   - `SUPABASE_SERVICE_ROLE_KEY` = tu clave `service_role` de Supabase para guardar cambios desde el admin
 4. Haz clic en **Deploy**. ¡Tu demo estará en vivo de inmediato con certificado SSL!
 
 ---

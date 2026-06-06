@@ -3,7 +3,10 @@ import { NextRequest, NextResponse } from 'next/server';
 const ADMIN_SESSION_COOKIE = 'flanagans_admin_session';
 
 const getSecret = () =>
-  process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_PASSWORD || '';
+  process.env.ADMIN_SESSION_SECRET ||
+  process.env.ADMIN_PASSWORD ||
+  process.env.NEXT_PUBLIC_ADMIN_PASSWORD ||
+  '';
 
 // Verificación del token compatible con el runtime Edge (Web Crypto).
 // Replica el HMAC-SHA256 base64url de src/lib/admin-session.ts.

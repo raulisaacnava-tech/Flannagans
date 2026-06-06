@@ -7,9 +7,10 @@ import {
   verifyAdminSessionToken,
 } from '@/lib/admin-session';
 
-// La contraseña SOLO se lee de una variable de servidor. Nunca usar NEXT_PUBLIC_*
-// (se incrustaría en el bundle del navegador) ni un valor por defecto en código.
-const getConfiguredPassword = () => process.env.ADMIN_PASSWORD;
+// La contraseña debe vivir en ADMIN_PASSWORD. El fallback legacy evita bloquear
+// despliegues que aun solo tengan configurada la variable antigua en Vercel.
+const getConfiguredPassword = () =>
+  process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
 export async function GET() {
   const token = (await cookies()).get(ADMIN_SESSION_COOKIE)?.value;
@@ -32,7 +33,11 @@ export async function POST(request: Request) {
   }
 
   const response = NextResponse.json({ authenticated: true });
-  response.cookies.set(ADMIN_SESSION_COOKIE, createAdminSessionToken(), adminSessionCookieOptions);
+  const isHttps = new URL(request.url).protocol === 'https:';
+  response.cookies.set(ADMIN_SESSION_COOKIE, createAdminSessionToken(), {
+    ...adminSessionCookieOptions,
+    secure: isHttps,
+  });
   return response;
 }
 
