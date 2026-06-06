@@ -35,7 +35,7 @@ export const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   ],
   locationTitle: 'Encuentranos',
   locationPlaceLabel: 'Calle Casiopea, 12, 28938 Mostoles, Madrid',
-  googleMapsEmbedUrl: 'https://www.google.com/maps?q=Calle%20Casiopea%2012%20Mostoles%20Madrid&z=17&output=embed',
+  googleMapsEmbedUrl: 'https://maps.google.com/maps?q=Calle%20Casiopea%2012%20Mostoles%20Madrid&z=17&hl=es&output=embed',
   googleMapsPlaceUrl: 'https://maps.google.com/?q=Calle%20Casiopea%2012%20Mostoles%20Madrid',
   reservationsTitle: 'Ven a por tu burger',
   reservationsEmail: 'info@flanagansburguer.com',
