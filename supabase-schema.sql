@@ -41,9 +41,19 @@ create table if not exists public.promotions (
   color text not null default 'primary',
   show_banner boolean not null default false,
   show_on_home boolean not null default true,
+  recurrence text not null default 'always',
+  week_days jsonb not null default '[]'::jsonb,
+  start_time text,
+  end_time text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Migración para bases existentes (seguro re-ejecutar):
+alter table public.promotions add column if not exists recurrence text not null default 'always';
+alter table public.promotions add column if not exists week_days jsonb not null default '[]'::jsonb;
+alter table public.promotions add column if not exists start_time text;
+alter table public.promotions add column if not exists end_time text;
 
 create table if not exists public.restaurants (
   id text primary key,
@@ -66,6 +76,9 @@ alter table public.products enable row level security;
 alter table public.promotions enable row level security;
 alter table public.restaurants enable row level security;
 
+-- SEGURIDAD: el público (anon) SOLO puede leer. Las escrituras se hacen desde
+-- el servidor con la clave service_role (que ignora RLS) a través de
+-- /api/admin/persist, protegido por la sesión de admin.
 drop policy if exists "public products read" on public.products;
 drop policy if exists "public products write" on public.products;
 drop policy if exists "public promotions read" on public.promotions;
@@ -74,10 +87,5 @@ drop policy if exists "public restaurants read" on public.restaurants;
 drop policy if exists "public restaurants write" on public.restaurants;
 
 create policy "public products read" on public.products for select using (true);
-create policy "public products write" on public.products for all using (true) with check (true);
-
 create policy "public promotions read" on public.promotions for select using (true);
-create policy "public promotions write" on public.promotions for all using (true) with check (true);
-
 create policy "public restaurants read" on public.restaurants for select using (true);
-create policy "public restaurants write" on public.restaurants for all using (true) with check (true);

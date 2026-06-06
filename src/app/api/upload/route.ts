@@ -22,12 +22,13 @@ export async function POST(request: Request) {
     }
 
     // 3. Validar tipo de archivo
+    // Nota: SVG queda fuera a propósito (puede contener scripts -> XSS si se
+    // sirve embebido). Si se necesita SVG, sanitizarlo antes de permitirlo.
     const validMimes = [
       'image/jpeg',
       'image/png',
       'image/gif',
       'image/webp',
-      'image/svg+xml',
       'video/mp4',
       'video/webm',
       'video/ogg',

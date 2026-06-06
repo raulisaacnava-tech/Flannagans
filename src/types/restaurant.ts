@@ -31,6 +31,7 @@ export interface DinerReview {
 }
 
 export interface HomepageContent {
+  logoScale: number; // multiplicador del tamaño del logo en la cabecera (0.6–1.6)
   heroEyebrow: string;
   heroTitle: string;
   heroDescription: string;

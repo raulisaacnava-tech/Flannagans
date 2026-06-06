@@ -7,8 +7,9 @@ import {
   verifyAdminSessionToken,
 } from '@/lib/admin-session';
 
-const getConfiguredPassword = () =>
-  process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'Mostoles987';
+// La contraseña SOLO se lee de una variable de servidor. Nunca usar NEXT_PUBLIC_*
+// (se incrustaría en el bundle del navegador) ni un valor por defecto en código.
+const getConfiguredPassword = () => process.env.ADMIN_PASSWORD;
 
 export async function GET() {
   const token = (await cookies()).get(ADMIN_SESSION_COOKIE)?.value;
@@ -18,7 +19,15 @@ export async function GET() {
 export async function POST(request: Request) {
   const { password } = (await request.json().catch(() => ({}))) as { password?: string };
 
-  if (!password || password !== getConfiguredPassword()) {
+  const configuredPassword = getConfiguredPassword();
+  if (!configuredPassword) {
+    return NextResponse.json(
+      { message: 'El panel no está configurado: falta ADMIN_PASSWORD en el servidor.' },
+      { status: 503 },
+    );
+  }
+
+  if (!password || password !== configuredPassword) {
     return NextResponse.json({ message: 'Credenciales incorrectas' }, { status: 401 });
   }
 

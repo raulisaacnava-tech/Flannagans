@@ -1,7 +1,7 @@
 import { INITIAL_PRODUCTS, INITIAL_RESTAURANT } from '@/lib/data';
 import { DEFAULT_PROMOTIONS } from '@/lib/default-promotions';
 import { getRestaurantWithDefaults } from '@/lib/restaurant-content';
-import { deleteMissingRows, isSupabaseConfigured, selectRows, upsertRows } from '@/lib/supabase-rest';
+import { isSupabaseConfigured, selectRows } from '@/lib/supabase-rest';
 import { Product } from '@/types/menu';
 import { Restaurant } from '@/types/restaurant';
 import type { Promotion } from '@/lib/promotions-store';
@@ -52,6 +52,10 @@ type PromotionRow = {
   color: string;
   show_banner: boolean;
   show_on_home: boolean;
+  recurrence?: Promotion['recurrence'] | null;
+  week_days?: number[] | null;
+  start_time?: string | null;
+  end_time?: string | null;
 };
 
 type RestaurantRow = {
@@ -71,7 +75,7 @@ type RestaurantRow = {
 
 const isClient = () => typeof window !== 'undefined';
 
-const toProductRow = (product: Product): ProductRow => ({
+export const toProductRow = (product: Product): ProductRow => ({
   id: product.id,
   restaurant_id: product.restaurantId,
   name: product.name,
@@ -125,7 +129,7 @@ const fromProductRow = (row: ProductRow): Product => ({
   extras: row.extras ?? undefined,
 });
 
-const toPromotionRow = (promo: Promotion): PromotionRow => ({
+export const toPromotionRow = (promo: Promotion): PromotionRow => ({
   id: promo.id,
   name: promo.name,
   label: promo.label,
@@ -139,6 +143,10 @@ const toPromotionRow = (promo: Promotion): PromotionRow => ({
   color: promo.color,
   show_banner: promo.showBanner,
   show_on_home: promo.showOnHome,
+  recurrence: promo.recurrence ?? 'always',
+  week_days: promo.weekDays ?? [],
+  start_time: promo.startTime ?? null,
+  end_time: promo.endTime ?? null,
 });
 
 const fromPromotionRow = (row: PromotionRow): Promotion => ({
@@ -155,9 +163,13 @@ const fromPromotionRow = (row: PromotionRow): Promotion => ({
   color: row.color,
   showBanner: row.show_banner,
   showOnHome: row.show_on_home,
+  recurrence: row.recurrence ?? 'always',
+  weekDays: row.week_days ?? [],
+  startTime: row.start_time ?? undefined,
+  endTime: row.end_time ?? undefined,
 });
 
-const toRestaurantRow = (restaurant: Restaurant): RestaurantRow => ({
+export const toRestaurantRow = (restaurant: Restaurant): RestaurantRow => ({
   id: restaurant.id,
   name: restaurant.name,
   logo_url: restaurant.logoUrl,
@@ -188,13 +200,26 @@ const fromRestaurantRow = (row: RestaurantRow): Restaurant =>
     homepageContent: row.homepage_content ?? undefined,
   });
 
-async function seedSupabase() {
-  await upsertRows('products', INITIAL_PRODUCTS.map(toProductRow));
-  await upsertRows('promotions', DEFAULT_PROMOTIONS.map(toPromotionRow));
-  await upsertRows('restaurants', [toRestaurantRow(getRestaurantWithDefaults(INITIAL_RESTAURANT))]);
+// Todas las escrituras pasan por la API del servidor, que valida la sesión de
+// admin y usa la clave service_role (nunca expuesta al navegador).
+async function persist(table: 'products' | 'promotions' | 'restaurants', rows: unknown[]) {
+  const response = await fetch('/api/admin/persist', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ table, rows }),
+  });
+
+  if (!response.ok) {
+    const detail = await response.json().catch(() => ({}));
+    throw new Error(detail?.error || `No se pudo guardar ${table} (${response.status})`);
+  }
 }
 
-export async function bootstrapSupabaseToLocal() {
+async function seedSupabaseIfEmpty() {
+  await fetch('/api/data/seed', { method: 'POST' }).catch(() => null);
+}
+
+export async function bootstrapSupabaseToLocal(attemptedSeed = false) {
   if (!isClient() || !isSupabaseConfigured()) return;
 
   try {
@@ -205,9 +230,12 @@ export async function bootstrapSupabaseToLocal() {
     ]);
 
     if (productRows.length === 0 && promotionRows.length === 0 && restaurantRows.length === 0) {
-      await seedSupabase();
+      // Solo intentamos sembrar una vez para evitar recursión infinita si el
+      // seed del servidor no está disponible (p. ej. sin service_role key).
+      if (attemptedSeed) return;
+      await seedSupabaseIfEmpty();
       localStorage.removeItem(BOOTSTRAP_KEY);
-      return bootstrapSupabaseToLocal();
+      return bootstrapSupabaseToLocal(true);
     }
 
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(productRows.map(fromProductRow)));
@@ -229,17 +257,15 @@ export async function bootstrapSupabaseToLocal() {
 
 export async function syncProductsToSupabase(products: Product[]) {
   if (!isSupabaseConfigured()) return;
-  await upsertRows('products', products.map(toProductRow));
-  await deleteMissingRows('products', products.map((product) => product.id));
+  await persist('products', products.map(toProductRow));
 }
 
 export async function syncPromotionsToSupabase(promotions: Promotion[]) {
   if (!isSupabaseConfigured()) return;
-  await upsertRows('promotions', promotions.map(toPromotionRow));
-  await deleteMissingRows('promotions', promotions.map((promotion) => promotion.id));
+  await persist('promotions', promotions.map(toPromotionRow));
 }
 
 export async function syncRestaurantToSupabase(restaurant: Restaurant) {
   if (!isSupabaseConfigured()) return;
-  await upsertRows('restaurants', [toRestaurantRow(getRestaurantWithDefaults(restaurant))]);
+  await persist('restaurants', [toRestaurantRow(getRestaurantWithDefaults(restaurant))]);
 }

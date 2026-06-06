@@ -3,7 +3,9 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export const isSupabaseConfigured = () => Boolean(supabaseUrl && supabaseAnonKey);
 
-const getHeaders = (prefer?: string) => {
+// La clave anónima solo se usa para LECTURA pública. Todas las escrituras pasan
+// por /api/admin/persist en el servidor con la clave service_role.
+const getHeaders = () => {
   if (!supabaseAnonKey) {
     throw new Error('Supabase anon key is missing');
   }
@@ -12,7 +14,6 @@ const getHeaders = (prefer?: string) => {
     apikey: supabaseAnonKey,
     Authorization: `Bearer ${supabaseAnonKey}`,
     'Content-Type': 'application/json',
-    ...(prefer ? { Prefer: prefer } : {}),
   };
 };
 
@@ -35,36 +36,4 @@ export async function selectRows<T>(table: string, query = '?select=*'): Promise
   }
 
   return response.json() as Promise<T[]>;
-}
-
-export async function upsertRows<T>(table: string, rows: T[]) {
-  const response = await fetch(buildUrl(table, '?on_conflict=id'), {
-    method: 'POST',
-    headers: getHeaders('resolution=merge-duplicates'),
-    body: JSON.stringify(rows),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Supabase upsert failed for ${table}: ${response.status}`);
-  }
-}
-
-export async function deleteMissingRows(table: string, ids: string[]) {
-  if (ids.length === 0) {
-    await fetch(buildUrl(table, '?id=not.is.null'), {
-      method: 'DELETE',
-      headers: getHeaders(),
-    });
-    return;
-  }
-
-  const encoded = ids.map((id) => `"${id}"`).join(',');
-  const response = await fetch(buildUrl(table, `?id=not.in.(${encodeURIComponent(encoded)})`), {
-    method: 'DELETE',
-    headers: getHeaders(),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Supabase delete failed for ${table}: ${response.status}`);
-  }
 }

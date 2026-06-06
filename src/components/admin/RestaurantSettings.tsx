@@ -1,9 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Clock, Globe, Save, Sparkles } from 'lucide-react';
+import { Clock, Globe, Palette, Save, Sparkles } from 'lucide-react';
 import { OpeningHours, Restaurant } from '@/types/restaurant';
 import { MediaUploadField } from './MediaUploadField';
+
+const DEFAULT_PRIMARY = '#FACC15';
+const DEFAULT_ACCENT = '#EF4444';
 
 interface RestaurantSettingsProps {
   restaurant: Restaurant;
@@ -19,6 +22,9 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
   const [address, setAddress] = useState('');
   const [welcomeMessage, setWelcomeMessage] = useState('');
   const [openingHours, setOpeningHours] = useState<OpeningHours[]>([]);
+  const [logoScale, setLogoScale] = useState(1);
+  const [primaryColor, setPrimaryColor] = useState(DEFAULT_PRIMARY);
+  const [accentColor, setAccentColor] = useState(DEFAULT_ACCENT);
 
   useEffect(() => {
     setName(restaurant.name);
@@ -29,6 +35,9 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
     setAddress(restaurant.address);
     setWelcomeMessage(restaurant.welcomeMessage || '');
     setOpeningHours(restaurant.openingHours);
+    setLogoScale(restaurant.homepageContent?.logoScale ?? 1);
+    setPrimaryColor(restaurant.brandColors?.primary || DEFAULT_PRIMARY);
+    setAccentColor(restaurant.brandColors?.accent || DEFAULT_ACCENT);
   }, [restaurant]);
 
   const handleSave = (event: React.FormEvent) => {
@@ -44,6 +53,14 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
       address,
       welcomeMessage,
       openingHours,
+      brandColors: {
+        ...restaurant.brandColors,
+        primary: primaryColor,
+        accent: accentColor,
+      },
+      homepageContent: restaurant.homepageContent
+        ? { ...restaurant.homepageContent, logoScale }
+        : restaurant.homepageContent,
     });
   };
 
@@ -142,6 +159,68 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
             accept="image/*"
             placeholder="/logo.webp"
           />
+
+          {/* Tamaño del logo */}
+          <div className="space-y-3 border border-white/10 bg-black/20 p-4">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Tamaño del logo</span>
+              <span className="text-[10px] font-mono font-bold text-primary">{Math.round(logoScale * 100)}%</span>
+            </div>
+            <input
+              type="range"
+              min={0.6}
+              max={1.6}
+              step={0.05}
+              value={logoScale}
+              onChange={(event) => setLogoScale(Number(event.target.value))}
+              className="w-full accent-primary cursor-pointer"
+            />
+            <div className="flex items-center justify-center bg-black/40 border border-white/5 p-3 overflow-hidden">
+              {logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={logoUrl}
+                  alt="Previsualización del logo"
+                  style={{ width: `${Math.round(180 * logoScale)}px` }}
+                  className="h-auto max-h-24 object-contain"
+                />
+              ) : (
+                <span className="text-[10px] text-cream/30 font-mono uppercase">Sube un logo para previsualizar</span>
+              )}
+            </div>
+            <p className="text-[9px] text-cream/30">Ajusta cómo se ve el logo en la cabecera de la web y del menú. Guarda para aplicar.</p>
+          </div>
+
+          {/* Colores de marca */}
+          <div className="space-y-3 border border-white/10 bg-black/20 p-4">
+            <div className="flex items-center gap-2">
+              <Palette className="text-primary" size={15} />
+              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Colores de marca</span>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <label className="space-y-2 block">
+                <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Color principal</span>
+                <div className="flex items-center gap-2">
+                  <input type="color" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} className="h-9 w-12 bg-transparent border border-white/10 cursor-pointer" />
+                  <input type="text" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} className="flex-1 bg-black/40 border border-white/10 focus:border-primary text-cream px-3 py-2 text-xs focus:outline-none font-mono uppercase" />
+                </div>
+              </label>
+              <label className="space-y-2 block">
+                <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Color de acento</span>
+                <div className="flex items-center gap-2">
+                  <input type="color" value={accentColor} onChange={(e) => setAccentColor(e.target.value)} className="h-9 w-12 bg-transparent border border-white/10 cursor-pointer" />
+                  <input type="text" value={accentColor} onChange={(e) => setAccentColor(e.target.value)} className="flex-1 bg-black/40 border border-white/10 focus:border-primary text-cream px-3 py-2 text-xs focus:outline-none font-mono uppercase" />
+                </div>
+              </label>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setPrimaryColor(DEFAULT_PRIMARY); setAccentColor(DEFAULT_ACCENT); }}
+              className="text-[9px] text-cream/40 hover:text-cream uppercase tracking-widest font-bold underline underline-offset-2 cursor-pointer"
+            >
+              Restaurar colores originales
+            </button>
+          </div>
 
           <label className="space-y-1 block">
             <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Direccion Fisica del Local</span>

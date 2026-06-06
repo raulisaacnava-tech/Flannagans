@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import {
   Promotion,
+  PromotionRecurrence,
   getPromotions,
   createPromotion,
   updatePromotion,
@@ -28,7 +29,28 @@ const EMPTY_PROMO: Omit<Promotion, 'id'> = {
   color: 'primary',
   showBanner: false,
   showOnHome: true,
+  recurrence: 'always',
+  weekDays: [],
+  startTime: '',
+  endTime: '',
 };
+
+// getDay(): 0 = domingo ... 6 = sábado. Mostramos de lunes a domingo.
+const WEEKDAYS: { value: number; label: string }[] = [
+  { value: 1, label: 'Lun' },
+  { value: 2, label: 'Mar' },
+  { value: 3, label: 'Mié' },
+  { value: 4, label: 'Jue' },
+  { value: 5, label: 'Vie' },
+  { value: 6, label: 'Sáb' },
+  { value: 0, label: 'Dom' },
+];
+
+const RECURRENCE_OPTIONS: { value: PromotionRecurrence; label: string; help: string }[] = [
+  { value: 'always', label: 'Permanente', help: 'Siempre visible mientras esté activa' },
+  { value: 'once', label: 'Única', help: 'Solo entre dos fechas concretas' },
+  { value: 'weekly', label: 'Recurrente', help: 'Días de la semana y horas elegidos' },
+];
 
 const COLOR_OPTIONS = [
   { key: 'primary', label: 'Amarillo', cls: 'bg-primary', text: 'text-secondary' },
@@ -41,6 +63,26 @@ const COLOR_OPTIONS = [
 
 function colorCls(key: string) {
   return COLOR_OPTIONS.find(c => c.key === key) ?? COLOR_OPTIONS[0];
+}
+
+function describeSchedule(promo: Promotion): string {
+  const recurrence = promo.recurrence ?? 'always';
+  if (recurrence === 'once') {
+    if (promo.startDate || promo.endDate) {
+      return `Única · ${promo.startDate || '...'} → ${promo.endDate || '...'}`;
+    }
+    return 'Única';
+  }
+  if (recurrence === 'weekly') {
+    const days = promo.weekDays && promo.weekDays.length > 0
+      ? WEEKDAYS.filter(d => promo.weekDays!.includes(d.value)).map(d => d.label).join(' ')
+      : 'Todos los días';
+    const hours = promo.startTime || promo.endTime
+      ? ` · ${promo.startTime || '00:00'}-${promo.endTime || '24:00'}`
+      : '';
+    return `Recurrente · ${days}${hours}`;
+  }
+  return 'Permanente';
 }
 
 interface PromotionsManagerProps {
@@ -102,6 +144,20 @@ export const PromotionsManager: React.FC<PromotionsManagerProps> = ({ products }
         : [...prev.productIds, productId],
     }));
   };
+
+  const toggleWeekDay = (day: number) => {
+    setFormData(prev => {
+      const current = prev.weekDays ?? [];
+      return {
+        ...prev,
+        weekDays: current.includes(day)
+          ? current.filter(d => d !== day)
+          : [...current, day],
+      };
+    });
+  };
+
+  const recurrence = formData.recurrence ?? 'always';
 
   const col = colorCls(formData.color);
 
@@ -168,8 +224,7 @@ export const PromotionsManager: React.FC<PromotionsManagerProps> = ({ products }
                   )}
                   <div className="text-[9px] text-cream/30 font-mono">
                     {promo.productIds.length} producto{promo.productIds.length !== 1 ? 's' : ''}
-                    {promo.startDate ? ` · desde ${promo.startDate}` : ''}
-                    {promo.endDate ? ` hasta ${promo.endDate}` : ''}
+                    {` · ${describeSchedule(promo)}`}
                   </div>
                 </div>
 
@@ -338,16 +393,76 @@ export const PromotionsManager: React.FC<PromotionsManagerProps> = ({ products }
                   </div>
                 </div>
 
-                {/* Fechas */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest font-mono text-cream/40">Fecha de inicio</label>
-                    <input type="date" value={formData.startDate || ''} onChange={e => setFormData(p => ({ ...p, startDate: e.target.value }))} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-3 py-2.5 text-sm focus:outline-none transition-colors" />
+                {/* Programación / Vigencia */}
+                <div className="space-y-3 border border-white/10 bg-black/20 p-4">
+                  <label className="text-[10px] uppercase tracking-widest font-mono text-cream/40">¿Cuándo se muestra?</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {RECURRENCE_OPTIONS.map(opt => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => setFormData(p => ({ ...p, recurrence: opt.value }))}
+                        className={`flex flex-col items-start gap-0.5 p-2.5 border text-left transition-colors cursor-pointer ${
+                          recurrence === opt.value
+                            ? 'border-primary/40 bg-primary/10'
+                            : 'border-white/10 bg-black/20 hover:border-white/20'
+                        }`}
+                      >
+                        <span className={`text-[11px] font-bold uppercase tracking-wider ${recurrence === opt.value ? 'text-primary' : 'text-cream/70'}`}>{opt.label}</span>
+                        <span className="text-[8px] text-cream/35 leading-tight">{opt.help}</span>
+                      </button>
+                    ))}
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest font-mono text-cream/40">Fecha de fin</label>
-                    <input type="date" value={formData.endDate || ''} onChange={e => setFormData(p => ({ ...p, endDate: e.target.value }))} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-3 py-2.5 text-sm focus:outline-none transition-colors" />
-                  </div>
+
+                  {recurrence === 'weekly' && (
+                    <div className="space-y-3 pt-1">
+                      <div className="space-y-1.5">
+                        <span className="text-[10px] uppercase tracking-widest font-mono text-cream/40">Días de la semana</span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {WEEKDAYS.map(day => {
+                            const active = (formData.weekDays ?? []).includes(day.value);
+                            return (
+                              <button
+                                key={day.value}
+                                type="button"
+                                onClick={() => toggleWeekDay(day.value)}
+                                className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider border transition-colors cursor-pointer ${
+                                  active ? 'bg-primary text-secondary border-primary' : 'bg-black/30 text-cream/50 border-white/10 hover:border-white/25'
+                                }`}
+                              >
+                                {day.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <p className="text-[8px] text-cream/30">Sin días marcados = todos los días.</p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-[10px] uppercase tracking-widest font-mono text-cream/40">Hora de inicio</label>
+                          <input type="time" value={formData.startTime || ''} onChange={e => setFormData(p => ({ ...p, startTime: e.target.value }))} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-3 py-2.5 text-sm focus:outline-none transition-colors" />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[10px] uppercase tracking-widest font-mono text-cream/40">Hora de fin</label>
+                          <input type="time" value={formData.endTime || ''} onChange={e => setFormData(p => ({ ...p, endTime: e.target.value }))} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-3 py-2.5 text-sm focus:outline-none transition-colors" />
+                        </div>
+                      </div>
+                      <p className="text-[8px] text-cream/30">Sin horas = todo el día. Admite franjas que cruzan medianoche (ej. 22:00 → 02:00).</p>
+                    </div>
+                  )}
+
+                  {recurrence === 'once' && (
+                    <div className="grid grid-cols-2 gap-4 pt-1">
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-widest font-mono text-cream/40">Fecha de inicio</label>
+                        <input type="date" value={formData.startDate || ''} onChange={e => setFormData(p => ({ ...p, startDate: e.target.value }))} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-3 py-2.5 text-sm focus:outline-none transition-colors" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-widest font-mono text-cream/40">Fecha de fin</label>
+                        <input type="date" value={formData.endDate || ''} onChange={e => setFormData(p => ({ ...p, endDate: e.target.value }))} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-3 py-2.5 text-sm focus:outline-none transition-colors" />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Color */}

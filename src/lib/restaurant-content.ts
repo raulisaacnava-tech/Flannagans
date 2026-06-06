@@ -1,6 +1,7 @@
 import { HomepageContent, Restaurant } from '@/types/restaurant';
 
 export const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
+  logoScale: 1,
   heroEyebrow: 'Smash, fuego y pan brutal',
   heroTitle: 'Burgers hechas al fuego para pedir otra',
   heroDescription: 'Carne sellada, cheddar fundido, pan tostado y una carta visual pensada para abrir el apetito desde el movil.',
@@ -49,13 +50,13 @@ export const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
     {
       id: 'glovo',
       name: 'Glovo',
-      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/13/Glovo_Logo.svg',
+      logoUrl: '/glovo-logo.png',
       orderUrl: 'https://glovoapp.com/',
     },
     {
       id: 'uber-eats',
       name: 'Uber Eats',
-      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Uber_Eats_2020_logo.svg',
+      logoUrl: '/LOGO-UBER-EATS.webp',
       orderUrl: 'https://www.ubereats.com/',
     },
   ],

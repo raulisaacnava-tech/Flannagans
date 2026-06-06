@@ -45,7 +45,7 @@ export const DeliverySection: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.42, delay: index * 0.08 }}
-                className="group flex min-h-28 items-center justify-between gap-5 border-2 border-secondary bg-white px-5 py-5 text-secondary transition-transform hover:-translate-y-1 sm:px-6"
+                className="group flex min-h-32 items-center justify-between gap-5 border-2 border-secondary bg-white px-6 py-6 text-secondary transition-transform hover:-translate-y-1 sm:px-7"
               >
                 <span className="flex min-w-0 flex-col gap-3">
                   <span className="block text-xs font-black uppercase tracking-[0.14em] text-secondary/45">
@@ -53,12 +53,12 @@ export const DeliverySection: React.FC = () => {
                   </span>
                   <img
                     src={partner.logoUrl}
-                    alt={`${partner.name} logo`}
-                    className="h-9 max-w-[13rem] object-contain object-left"
+                    alt={`Pedir en ${partner.name}`}
+                    className="h-12 w-auto max-w-[15rem] object-contain object-left sm:h-14"
                     loading="lazy"
                   />
                 </span>
-                <ExternalLink className="shrink-0 text-secondary/45 transition-colors group-hover:text-secondary" size={20} />
+                <ExternalLink className="shrink-0 text-secondary/45 transition-colors group-hover:text-secondary" size={22} />
               </motion.a>
             ))}
           </div>

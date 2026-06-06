@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Inter } from "next/font/google";
 import { AppDataBootstrap } from "@/components/app/AppDataBootstrap";
+import { BrandTheme } from "@/components/app/BrandTheme";
 import { OrderListProvider } from "@/lib/order-list";
 import "./globals.css";
 
@@ -78,6 +79,27 @@ export const viewport: Viewport = {
   themeColor: "#050505",
 };
 
+const restaurantJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  name: "Flanagans Burguer",
+  servesCuisine: "Hamburguesas",
+  priceRange: "€€",
+  image: "https://flannagans.vercel.app/logo.webp",
+  url: "https://flannagans.vercel.app",
+  telephone: "+34919401241",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Calle Casiopea, 12",
+    addressLocality: "Móstoles",
+    addressRegion: "Madrid",
+    postalCode: "28938",
+    addressCountry: "ES",
+  },
+  menu: "https://flannagans.vercel.app/menu",
+  acceptsReservations: "True",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -90,8 +112,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col bg-background font-sans text-foreground selection:bg-primary selection:text-secondary">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd) }}
+        />
         <OrderListProvider>
           <AppDataBootstrap />
+          <BrandTheme />
           {children}
         </OrderListProvider>
       </body>

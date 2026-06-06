@@ -901,9 +901,9 @@ export const INITIAL_RESTAURANT: Restaurant = {
   name: 'Flanagans Burguer',
   logoUrl: '/logo.webp',
   brandColors: {
-    primary: '#EAB308',
-    secondary: '#121212',
-    accent: '#EA580C',
+    primary: '#FACC15',
+    secondary: '#000000',
+    accent: '#EF4444',
   },
   phone: '919401241',
   whatsappNumber: '34919401241',
