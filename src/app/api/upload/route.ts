@@ -50,27 +50,75 @@ export async function POST(request: Request) {
       );
     }
 
-    // 5. Asegurar que el directorio de destino exista
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
-    // 6. Generar nombre de archivo único y seguro
+    // 5. Generar nombre de archivo único y seguro
     const ext = path.extname(file.name) || (isVideo ? '.mp4' : '.webp');
     const safeName = file.name
       .replace(/[^a-zA-Z0-9.-]/g, '_')
       .replace(/_{2,}/g, '_');
     const nameWithoutExt = path.basename(safeName, ext);
     const uniqueFilename = `${nameWithoutExt}_${Date.now()}${ext}`;
-    const filePath = path.join(uploadDir, uniqueFilename);
 
-    // 7. Escribir archivo en disco
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
+
+    // 6. Intentar subir a Supabase Storage si está configurado
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (supabaseUrl && supabaseAnonKey) {
+      const bucketName = 'media';
+      const uploadUrl = `${supabaseUrl}/storage/v1/object/${bucketName}/${uniqueFilename}`;
+      
+      try {
+        console.log(`Attempting to upload file to Supabase bucket "${bucketName}"...`);
+        const response = await fetch(uploadUrl, {
+          method: 'POST',
+          headers: {
+            'apikey': supabaseAnonKey,
+            'Authorization': `Bearer ${supabaseAnonKey}`,
+            'Content-Type': file.type,
+          },
+          body: buffer,
+        });
+
+        if (response.ok) {
+          const fileUrl = `${supabaseUrl}/storage/v1/object/public/${bucketName}/${uniqueFilename}`;
+          console.log(`Supabase upload successful! URL: ${fileUrl}`);
+          return NextResponse.json({ url: fileUrl });
+        } else {
+          const errText = await response.text();
+          console.error('Supabase storage upload failed status:', response.status, errText);
+          
+          if (response.status === 404 || errText.includes('Bucket not found')) {
+            throw new Error('El bucket de Supabase "media" no existe o no tiene políticas de inserción pública configuradas. Por favor créalo y configúralo en tu consola de Supabase.');
+          }
+          throw new Error(`Error en Supabase Storage (${response.status}): ${errText}`);
+        }
+      } catch (supaError: any) {
+        console.error('Supabase upload exception:', supaError);
+        
+        // Si el error es sobre el bucket inexistente, lo propagamos para guiar al usuario
+        if (supaError.message && supaError.message.includes('media')) {
+          throw supaError;
+        }
+
+        // Si estamos en Vercel, no podemos hacer fallback local ya que fallará siempre
+        if (process.env.VERCEL || process.cwd().startsWith('/var/task')) {
+          throw supaError;
+        }
+        
+        console.log('Falling back to local disk storage...');
+      }
+    }
+
+    // 7. Fallback Local (solo para desarrollo local en disco)
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    const filePath = path.join(uploadDir, uniqueFilename);
     await fs.promises.writeFile(filePath, buffer);
 
-    // 8. Responder con la URL pública
     const fileUrl = `/uploads/${uniqueFilename}`;
     return NextResponse.json({ url: fileUrl });
   } catch (error) {
