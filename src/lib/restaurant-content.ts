@@ -1,5 +1,10 @@
 import { HomepageContent, Restaurant } from '@/types/restaurant';
 
+// Mapa por defecto, garantizado embebible (OpenStreetMap no bloquea iframes,
+// a diferencia del antiguo "output=embed" de Google). Centrado en el local.
+export const DEFAULT_MAP_EMBED =
+  'https://www.openstreetmap.org/export/embed.html?bbox=-3.8678%2C40.3101%2C-3.8578%2C40.3151&layer=mapnik&marker=40.3126%2C-3.8628';
+
 export const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   logoScale: 1,
   heroEyebrow: 'Smash, fuego y pan brutal',
@@ -35,7 +40,7 @@ export const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
   ],
   locationTitle: 'Encuentranos',
   locationPlaceLabel: 'Calle Casiopea, 12, 28938 Mostoles, Madrid',
-  googleMapsEmbedUrl: 'https://maps.google.com/maps?q=Calle%20Casiopea%2012%20Mostoles%20Madrid&z=17&hl=es&output=embed',
+  googleMapsEmbedUrl: DEFAULT_MAP_EMBED,
   googleMapsPlaceUrl: 'https://maps.google.com/?q=Calle%20Casiopea%2012%20Mostoles%20Madrid',
   reservationsTitle: 'Ven a por tu burger',
   reservationsEmail: 'info@flanagansburguer.com',

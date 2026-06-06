@@ -223,8 +223,11 @@ export const HomepageContentManager: React.FC<HomepageContentManagerProps> = ({
           </div>
 
           <label className="space-y-1 block">
-            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL embed Google Maps</span>
+            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL embed del mapa</span>
             <input value={draft.googleMapsEmbedUrl} onChange={(e) => updateField('googleMapsEmbedUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
+            <span className="block text-[9px] text-cream/30 leading-relaxed pt-1">
+              Por defecto se muestra un mapa que siempre funciona. Para usar Google: Google Maps → Compartir → &ldquo;Incorporar un mapa&rdquo; → copia el enlace de <code>src=&quot;...&quot;</code> (empieza por <code>https://www.google.com/maps/embed?pb=</code>) y pégalo aquí.
+            </span>
           </label>
 
           <label className="space-y-1 block">

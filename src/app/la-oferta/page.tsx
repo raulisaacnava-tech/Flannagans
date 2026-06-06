@@ -22,13 +22,13 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
-  title: 'Plan Piloto Fundador',
+  title: 'Oferta Exclusiva Flanagans',
   description:
-    'Oferta fundadora para Flanagans: landing, menu digital, QR, panel admin, hosting y soporte por una mensualidad especial de piloto.',
+    'Oferta exclusiva para Flanagans: alta inicial a 0 euros, menu digital, landing, QR, panel admin, hosting y soporte por una mensualidad especial.',
 };
 
 const founderBenefits = [
-  'Alta inicial a 0 euros',
+  'Alta inicial: 0 euros',
   '69 euros al mes durante el arranque',
   'Permanencia minima de 3 meses',
   'Despues, mensualidad estable de 89 euros',
@@ -103,7 +103,7 @@ const adminShots = [
 ];
 
 const timeline = [
-  ['Hoy', 'Alta inicial a 0 euros para este piloto fundador.'],
+  ['Hoy', 'Alta inicial a 0 euros porque Flanagans ya tiene trabajo adelantado.'],
   ['Mes 1 a 3', '69 euros al mes con hosting, mantenimiento y soporte basico incluidos.'],
   ['Desde mes 4', '89 euros al mes para continuar con el sistema activo y mantenido.'],
 ];
@@ -151,11 +151,19 @@ export default function OfferPage() {
                   Oferta unica para Flanagans
                 </p>
                 <h1 className="max-w-5xl font-display text-5xl font-black uppercase leading-[0.88] text-cream sm:text-6xl lg:text-7xl">
-                  Plan Piloto Fundador
+                  Alta inicial 0 euros
                 </h1>
                 <p className="mt-7 max-w-2xl text-lg font-semibold leading-relaxed text-cream/72">
-                  Flanagans seria el restaurante modelo: la primera version real del sistema, con una tarifa fundadora que no se repetira para otros locales.
+                  La propuesta cambia a favor de Flanagans: en vez de pagar una implantacion inicial grande, arranca con el trabajo ya adelantado y solo paga la mensualidad del sistema.
                 </p>
+                <div className="mt-7 max-w-2xl border border-primary/35 bg-primary/10 p-5">
+                  <p className="font-display text-sm font-black uppercase tracking-[0.12em] text-primary">
+                    Oferta exclusiva para este restaurante
+                  </p>
+                  <p className="mt-3 text-sm font-semibold leading-relaxed text-cream/72">
+                    Esta condicion se ofrece porque Flanagans ya tiene una base preparada como restaurante modelo. No es el precio normal de alta para nuevos locales.
+                  </p>
+                </div>
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/menu"
@@ -177,14 +185,24 @@ export default function OfferPage() {
                 <div className="flex items-center gap-3 text-primary">
                   <ShieldCheck size={24} />
                   <span className="font-display text-sm font-black uppercase tracking-[0.14em]">
-                    Piloto fundador
+                    Sin pago inicial
                   </span>
                 </div>
-                <p className="mt-6 font-display text-7xl font-black leading-none text-primary">69</p>
-                <p className="mt-2 font-display text-xl font-black uppercase text-cream">euros al mes</p>
-                <p className="mt-5 text-sm font-semibold leading-relaxed text-cream/68">
-                  Alta inicial a 0 euros. Permanencia minima de 3 meses. Luego sube a 89 euros al mes.
-                </p>
+                <div className="mt-6 border-2 border-primary bg-primary p-5 text-secondary">
+                  <p className="font-display text-[clamp(4.5rem,15vw,7.5rem)] font-black leading-none">0</p>
+                  <p className="mt-2 font-display text-2xl font-black uppercase leading-none">
+                    euros de alta
+                  </p>
+                </div>
+                <div className="mt-5 grid grid-cols-[auto_1fr] gap-4 border-t border-white/10 pt-5">
+                  <p className="font-display text-5xl font-black leading-none text-primary">69</p>
+                  <div>
+                    <p className="font-display text-lg font-black uppercase text-cream">euros al mes</p>
+                    <p className="mt-1 text-sm font-semibold leading-relaxed text-cream/58">
+                      Primeros 3 meses. Despues, 89 euros al mes.
+                    </p>
+                  </div>
+                </div>
               </aside>
             </div>
 
@@ -204,10 +222,10 @@ export default function OfferPage() {
             <div className="grid gap-8 lg:grid-cols-[0.75fr_1fr] lg:items-center">
               <div>
                 <h2 className="font-display text-4xl font-black uppercase leading-none sm:text-5xl lg:text-6xl">
-                  El precio fundador es el gancho
+                  El cambio importante: no hay pago inicial
                 </h2>
                 <p className="mt-5 max-w-xl text-base font-bold leading-relaxed text-secondary/76">
-                  En vez de cobrar una implantacion inicial grande, este piloto arranca con alta a 0 euros y una mensualidad reducida para validar el sistema con Flanagans como restaurante fundador.
+                  La primera propuesta podia plantearse como pago unico de implantacion. Esta version elimina ese golpe inicial porque el sistema de Flanagans ya esta avanzado.
                 </p>
               </div>
               <div className="grid gap-3 sm:grid-cols-3">
@@ -281,8 +299,19 @@ export default function OfferPage() {
                 <div className="flex items-center gap-3 text-primary">
                   <Euro size={25} />
                   <span className="font-display text-sm font-black uppercase tracking-[0.14em]">
-                    Mensualidad fundadora
+                    Oferta exclusiva Flanagans
                   </span>
+                </div>
+                <div className="mt-8 border-2 border-primary bg-primary p-5 text-secondary sm:p-6">
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-secondary/62">
+                    Antes habia implantacion inicial. Aqui no.
+                  </p>
+                  <p className="mt-3 font-display text-[clamp(4.25rem,16vw,8rem)] font-black leading-none">
+                    0 euros
+                  </p>
+                  <p className="mt-2 font-display text-2xl font-black uppercase leading-none">
+                    de alta inicial
+                  </p>
                 </div>
                 <div className="mt-9 grid gap-8 sm:grid-cols-[auto_1fr] sm:items-end">
                   <div>
@@ -290,7 +319,7 @@ export default function OfferPage() {
                     <p className="mt-2 font-display text-xl font-black uppercase text-cream">euros / mes</p>
                   </div>
                   <p className="max-w-md text-base font-semibold leading-relaxed text-cream/68">
-                    Durante los 3 primeros meses. Incluye landing, menu digital, QR, panel admin, hosting, mantenimiento tecnico, soporte basico y ajustes menores.
+                    Durante los 3 primeros meses. La mensualidad incluye landing, menu digital, QR, panel admin, hosting, mantenimiento tecnico, soporte basico y ajustes menores.
                   </p>
                 </div>
                 <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -399,24 +428,27 @@ export default function OfferPage() {
             <div className="grid gap-10 lg:grid-cols-[0.56fr_1fr] lg:items-start">
               <div>
                 <p className="mb-4 inline-flex bg-white px-3 py-2 font-display text-xs font-black uppercase tracking-[0.14em] text-accent-red">
-                  Decision sencilla
+                  La mejora de la propuesta
                 </p>
                 <h2 className="font-display text-4xl font-black uppercase leading-none sm:text-5xl lg:text-6xl">
-                  Para arrancar solo hay dos caminos
+                  Elimina el pago fuerte de entrada
                 </h2>
+                <p className="mt-5 max-w-md text-base font-bold leading-relaxed text-white/78">
+                  El objetivo es que Flanagans pueda decir que si sin tener que asumir de golpe una implantacion inicial.
+                </p>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <article className="border border-white/25 bg-white p-6 text-secondary">
                   <Server className="text-accent-red" size={25} />
-                  <h3 className="mt-8 font-display text-2xl font-black uppercase">Sin sesion de fotos</h3>
+                  <h3 className="mt-8 font-display text-2xl font-black uppercase">Arrancar sin fotos nuevas</h3>
                   <p className="mt-4 text-sm font-bold leading-relaxed text-secondary/68">
-                    Se publica con el material existente y Flanagans paga solo la mensualidad del piloto.
+                    Se publica con el material existente. El coste inicial queda en 0 euros y Flanagans paga solo la mensualidad.
                   </p>
                   <p className="mt-8 font-display text-4xl font-black uppercase">69 euros / mes</p>
                 </article>
                 <article className="border border-white/25 bg-secondary p-6 text-cream">
                   <Utensils className="text-primary" size={25} />
-                  <h3 className="mt-8 font-display text-2xl font-black uppercase">Con sesion de fotos</h3>
+                  <h3 className="mt-8 font-display text-2xl font-black uppercase">Arrancar con fotos nuevas</h3>
                   <p className="mt-4 text-sm font-bold leading-relaxed text-cream/68">
                     Se suma una jornada visual para que la carta arranque con material propio y mas apetecible.
                   </p>
@@ -434,10 +466,10 @@ export default function OfferPage() {
             <div className="grid gap-6 border border-primary/25 bg-[#0A0A0A] p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
                 <h2 className="font-display text-3xl font-black uppercase leading-tight text-cream sm:text-4xl">
-                  Una oferta pensada para que Flanagans sea el caso fundador
+                  El punto clave: Flanagans no paga alta inicial
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm font-semibold leading-relaxed text-cream/62 sm:text-base">
-                  El cliente mantiene su dominio. La mensualidad cubre servidor, mantenimiento tecnico, soporte basico y ajustes menores. La fotografia profesional queda como extra opcional, sin obligar al restaurante a contratarla para arrancar.
+                  Esta condicion existe porque el proyecto ya esta adelantado para Flanagans. El cliente mantiene su dominio, la mensualidad cubre servidor, mantenimiento tecnico, soporte basico y ajustes menores, y la fotografia profesional queda como extra opcional.
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">

@@ -4,23 +4,22 @@ import React from 'react';
 import { ArrowUpRight, Clock, MapPin, Navigation } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRestaurant } from '@/lib/use-restaurant';
-
-// Google bloquea en iframe el formato "www.google.com/maps?q=...&output=embed".
-// Usamos un origen de embed fiable (maps.google.com) derivado de la dirección,
-// salvo que el admin haya pegado ya un embed oficial válido.
-const buildReliableEmbed = (query: string) =>
-  `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=17&hl=es&output=embed`;
+import { DEFAULT_MAP_EMBED } from '@/lib/restaurant-content';
 
 export const LocationSection: React.FC = () => {
   const restaurant = useRestaurant();
   const content = restaurant.homepageContent!;
 
+  // Google bloquea en iframe el viejo formato "...&output=embed" (X-Frame-Options),
+  // por eso el mapa salía roto. Solo aceptamos embeds que de verdad se pueden
+  // incrustar: el oficial de Google ("/maps/embed?pb=...") o OpenStreetMap.
+  // Cualquier otra cosa (o el valor roto guardado) cae al mapa por defecto.
   const rawEmbed = content.googleMapsEmbedUrl || '';
-  const isReliableEmbed =
-    rawEmbed.includes('/maps/embed') || rawEmbed.startsWith('https://maps.google.com/maps');
-  const mapQuery = content.locationPlaceLabel || restaurant.address || restaurant.name;
-  const embedSrc = isReliableEmbed ? rawEmbed : buildReliableEmbed(mapQuery);
+  const isEmbeddable =
+    rawEmbed.includes('/maps/embed') || rawEmbed.includes('openstreetmap.org/export/embed');
+  const embedSrc = isEmbeddable ? rawEmbed : DEFAULT_MAP_EMBED;
 
+  const mapQuery = content.locationPlaceLabel || restaurant.address || restaurant.name;
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`;
 
   const todayLabel = new Date()
@@ -58,7 +57,7 @@ export const LocationSection: React.FC = () => {
               </p>
             </div>
 
-            <h2 className="font-display text-[clamp(2.6rem,6vw,4.75rem)] font-black uppercase leading-[0.9] tracking-[-0.025em] text-cream [text-wrap:balance]">
+            <h2 className="font-display text-[clamp(2.4rem,5vw,4.25rem)] font-black uppercase leading-[0.9] tracking-[-0.025em] text-cream [text-wrap:balance] [overflow-wrap:anywhere]">
               {content.locationTitle}
             </h2>
 
