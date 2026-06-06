@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /.next-local/
+/.next-local-demo/
 /.next-demo-build/
 /.next-live-demo*/
 /.next-responsive/
@@ -43,6 +44,9 @@ dev-demo.log
 dev-demo.err
 dev-live.log
 dev-live.err
+dev-local-demo.log
+dev-local-demo.err
+dev-local-demo-job.log
 temp_log.txt
 
 # env files (can opt-in for committing if needed)
