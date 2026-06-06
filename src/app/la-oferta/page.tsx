@@ -143,7 +143,7 @@ export default function OfferPage() {
           <Link
             href="/"
             aria-label="Flanagans inicio"
-            className="relative block h-[72px] w-[210px] sm:h-[92px] sm:w-[270px]"
+            className="relative block h-[104px] w-[300px] sm:h-[126px] sm:w-[370px] lg:h-[142px] lg:w-[420px]"
           >
             <Image
               src="/logo.webp"
@@ -158,7 +158,7 @@ export default function OfferPage() {
       </header>
 
       <main>
-        <section className="relative overflow-hidden bg-[#080604] pt-36 pb-14 sm:pt-44 lg:pt-48 lg:pb-20">
+        <section className="relative overflow-hidden bg-[#080604] pt-44 pb-14 sm:pt-56 lg:pt-64 lg:pb-20">
           <div className="absolute inset-0 hero-fire-wash opacity-40" aria-hidden="true" />
           <div className="absolute inset-x-0 bottom-0 h-px bg-primary/30" aria-hidden="true" />
 
