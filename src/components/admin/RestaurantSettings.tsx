@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Clock, Globe, Save, Sparkles } from 'lucide-react';
 import { OpeningHours, Restaurant } from '@/types/restaurant';
+import { MediaUploadField } from './MediaUploadField';
 
 interface RestaurantSettingsProps {
   restaurant: Restaurant;
@@ -134,16 +135,13 @@ export const RestaurantSettings: React.FC<RestaurantSettingsProps> = ({ restaura
             </label>
           </div>
 
-          <label className="space-y-1 block">
-            <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL del Logotipo</span>
-            <input
-              type="text"
-              required
-              value={logoUrl}
-              onChange={(event) => setLogoUrl(event.target.value)}
-              className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream rounded-none px-4 py-2.5 text-xs focus:outline-none transition-colors duration-300 font-semibold"
-            />
-          </label>
+          <MediaUploadField
+            label="URL del Logotipo"
+            value={logoUrl}
+            onChange={setLogoUrl}
+            accept="image/*"
+            placeholder="/logo.webp"
+          />
 
           <label className="space-y-1 block">
             <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Direccion Fisica del Local</span>

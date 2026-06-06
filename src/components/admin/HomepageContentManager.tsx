@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Bike, Image as ImageIcon, MapPinned, MonitorPlay, Quote, Save, Star } from 'lucide-react';
+import { MediaUploadField } from './MediaUploadField';
 import { DEFAULT_HOMEPAGE_CONTENT } from '@/lib/restaurant-content';
 import { HomepageContent, Restaurant } from '@/types/restaurant';
 
@@ -122,14 +123,20 @@ export const HomepageContentManager: React.FC<HomepageContentManagerProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <label className="space-y-1">
-              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL video hero</span>
-              <input value={draft.heroVideoUrl} onChange={(e) => updateField('heroVideoUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
-            </label>
-            <label className="space-y-1">
-              <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL poster hero</span>
-              <input value={draft.heroPosterUrl} onChange={(e) => updateField('heroPosterUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
-            </label>
+            <MediaUploadField
+              label="URL video hero"
+              value={draft.heroVideoUrl}
+              onChange={(val) => updateField('heroVideoUrl', val)}
+              accept="video/*"
+              placeholder="Ej. /videomenu/hamburguesas/la_smashzilla.webm"
+            />
+            <MediaUploadField
+              label="URL poster hero"
+              value={draft.heroPosterUrl}
+              onChange={(val) => updateField('heroPosterUrl', val)}
+              accept="image/*"
+              placeholder="Ej. /fotosmenu/Hamburguesas/lasmashzilla.webp"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -184,10 +191,13 @@ export const HomepageContentManager: React.FC<HomepageContentManagerProps> = ({
                   <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Etiqueta</span>
                   <input value={item.label} onChange={(e) => updateGallery(index, 'label', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
                 </label>
-                <label className="space-y-1 block">
-                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL imagen</span>
-                  <input value={item.imageUrl} onChange={(e) => updateGallery(index, 'imageUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
-                </label>
+                <MediaUploadField
+                  label="URL imagen"
+                  value={item.imageUrl}
+                  onChange={(val) => updateGallery(index, 'imageUrl', val)}
+                  accept="image/*"
+                  placeholder="Ej. /fotosmenu/galeria-1.webp"
+                />
               </div>
             ))}
           </div>
@@ -265,10 +275,13 @@ export const HomepageContentManager: React.FC<HomepageContentManagerProps> = ({
                   <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">Nombre</span>
                   <input value={partner.name} onChange={(e) => updateDeliveryPartner(index, 'name', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
                 </label>
-                <label className="space-y-1 block">
-                  <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL logo</span>
-                  <input value={partner.logoUrl} onChange={(e) => updateDeliveryPartner(index, 'logoUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />
-                </label>
+                <MediaUploadField
+                  label="URL logo"
+                  value={partner.logoUrl}
+                  onChange={(val) => updateDeliveryPartner(index, 'logoUrl', val)}
+                  accept="image/*"
+                  placeholder="Ej. /fotosmenu/ubereats.webp"
+                />
                 <label className="space-y-1 block">
                   <span className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL pedido</span>
                   <input value={partner.orderUrl} onChange={(e) => updateDeliveryPartner(index, 'orderUrl', e.target.value)} className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream px-4 py-2.5 text-xs focus:outline-none font-semibold" />

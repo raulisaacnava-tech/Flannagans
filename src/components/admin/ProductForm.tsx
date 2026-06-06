@@ -5,6 +5,7 @@ import { Product, Category } from '@/types/menu';
 import { getExtras, getAllergens, getProducts } from '@/lib/menu-store';
 import { X, Save, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MediaUploadField } from './MediaUploadField';
 
 interface ProductFormProps {
   product: Product | null; // Null para añadir nuevo
@@ -312,40 +313,30 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </div>
 
                 {/* 4. Assets Multimedia */}
-                <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL de la Imagen Principal</label>
-                  <input
-                    type="url"
-                    required
-                    value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
-                    placeholder="https://images.unsplash.com/..."
-                    className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream rounded-none px-4 py-2.5 text-xs focus:outline-none transition-colors duration-300 font-semibold"
-                  />
-                </div>
+                <MediaUploadField
+                  label="URL de la Imagen Principal"
+                  value={imageUrl}
+                  onChange={setImageUrl}
+                  accept="image/*"
+                  placeholder="https://images.unsplash.com/..."
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL del Video (Vista Vídeo)</label>
-                    <input
-                      type="url"
-                      value={videoUrl}
-                      onChange={(e) => setVideoUrl(e.target.value)}
-                      placeholder="https://player.vimeo.com/... .mp4"
-                      className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream rounded-none px-4 py-2.5 text-xs focus:outline-none transition-colors duration-300 font-semibold"
-                    />
-                  </div>
+                  <MediaUploadField
+                    label="URL del Video (Vista Vídeo)"
+                    value={videoUrl}
+                    onChange={setVideoUrl}
+                    accept="video/*"
+                    placeholder="https://player.vimeo.com/... .mp4"
+                  />
 
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-cream/45 uppercase tracking-widest">URL de la Portada del Video (Poster)</label>
-                    <input
-                      type="url"
-                      value={posterImage}
-                      onChange={(e) => setPosterImage(e.target.value)}
-                      placeholder="https://images.unsplash.com/..."
-                      className="w-full bg-black/40 border border-white/10 focus:border-primary text-cream rounded-none px-4 py-2.5 text-xs focus:outline-none transition-colors duration-300 font-semibold"
-                    />
-                  </div>
+                  <MediaUploadField
+                    label="URL de la Portada del Video (Poster)"
+                    value={posterImage}
+                    onChange={setPosterImage}
+                    accept="image/*"
+                    placeholder="https://images.unsplash.com/..."
+                  />
                 </div>
 
                 {/* 5. Alérgenos y Extras (Listas Checkbox) */}
