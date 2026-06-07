@@ -19,6 +19,8 @@
 /.next-local-demo/
 /.next-demo-build/
 /.next-live-demo*/
+/.next-qr-dev/
+/.next-qr-build/
 /.next-responsive/
 /.next-responsive-build/
 /out/
@@ -47,6 +49,8 @@ dev-live.err
 dev-local-demo.log
 dev-local-demo.err
 dev-local-demo-job.log
+dev-qr.log
+dev-qr.err
 temp_log.txt
 
 # env files (can opt-in for committing if needed)

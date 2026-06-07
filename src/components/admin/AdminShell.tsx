@@ -9,6 +9,7 @@ import {
   Globe,
   LayoutDashboard,
   LogOut,
+  QrCode,
   RefreshCw,
   Settings,
   Sparkles,
@@ -28,6 +29,7 @@ import { Category, Product } from '@/types/menu';
 import { Restaurant } from '@/types/restaurant';
 import { AdminDashboard } from './AdminDashboard';
 import { HomepageContentManager } from './HomepageContentManager';
+import { MenuQrGenerator } from './MenuQrGenerator';
 import { ProductForm } from './ProductForm';
 import { ProductTable } from './ProductTable';
 import { PromotionsManager } from './PromotionsManager';
@@ -166,6 +168,7 @@ export const AdminShell: React.FC = () => {
     { id: 'productos', label: 'Gestionar Carta', icon: Beef },
     { id: 'promociones', label: 'Promociones', icon: Tag },
     { id: 'venta-visual', label: 'Venta Visual', icon: Sparkles },
+    { id: 'qr-menu', label: 'QR Menu', icon: QrCode },
     { id: 'contenido-web', label: 'Contenido Web', icon: Globe },
     { id: 'configuracion', label: 'Configuracion', icon: Settings },
   ];
@@ -273,6 +276,8 @@ export const AdminShell: React.FC = () => {
               }}
             />
           )}
+
+          {activeSection === 'qr-menu' && <MenuQrGenerator restaurant={restaurant} products={products} />}
 
           {activeSection === 'contenido-web' && restaurant && (
             <HomepageContentManager restaurant={restaurant} onSave={handleSaveRestaurant} />
